@@ -1,0 +1,1087 @@
+// Generated .IDL file (by the OLE/COM Object Viewer)
+// 
+// typelib filename: <could not determine filename>
+
+[
+  uuid(53993F61-68A8-440F-A000-911D5AD9776F),
+  version(1.0),
+  custom(50867B00-BB69-11D0-A8FF-00A0C9110059, 9782)
+
+]
+library Regexp_Interface
+{
+    // TLib :     // TLib : OLE Automation : {00020430-0000-0000-C000-000000000046}
+    importlib("stdole2.tlb");
+
+    // Forward declare all types defined in this typelib
+    interface _cRegExp;
+    interface _IRegExpMatch;
+    interface _IRegExpMatchCollection;
+    interface _IRegExpSubMatches;
+    interface _IRegExp;
+    interface _IPcre;
+    interface _IPcreMatch;
+    interface _IPcreMatches;
+    interface _IPcreOptions;
+    interface _IPcreOptionsCompile;
+    interface _IPcreOptionsGeneral;
+    interface _IPcreOptionsMatch;
+    interface _IPcreOptionsReplace;
+    dispinterface __cRegExp;
+    dispinterface __IPcre;
+
+    typedef [uuid(2604DD32-114D-42A9-9B52-D8D07A671E4B), version(1.0)]
+    enum {
+        subaction_None = 0,
+        subaction_Replace = 1,
+        subaction_ReplaceAndCache = 2
+    } e_SubstitutionAction;
+
+    [
+      odl,
+      uuid(191B3A03-79E6-48C9-85AF-3DA0DD6D1152),
+      version(1.0),
+      hidden,
+      dual,
+      nonextensible,
+      oleautomation
+    ]
+    interface _cRegExp : IDispatch {
+        [id(0x68030036), propget]
+        HRESULT IRegExp_UsePcre([out, retval] VARIANT_BOOL* );
+        [id(0x68030036), propput]
+        HRESULT IRegExp_UsePcre([in, out] VARIANT_BOOL* );
+        [id(0x68030035), propget]
+        HRESULT IRegExp_GlobalSearch([out, retval] VARIANT_BOOL* );
+        [id(0x68030035), propput]
+        HRESULT IRegExp_GlobalSearch([in, out] VARIANT_BOOL* );
+        [id(0x68030034), propget]
+        HRESULT IRegExp_IgnoreCase([out, retval] VARIANT_BOOL* );
+        [id(0x68030034), propput]
+        HRESULT IRegExp_IgnoreCase([in, out] VARIANT_BOOL* );
+        [id(0x68030033), propget]
+        HRESULT IRegExp_Multiline([out, retval] VARIANT_BOOL* );
+        [id(0x68030033), propput]
+        HRESULT IRegExp_Multiline([in, out] VARIANT_BOOL* );
+        [id(0x68030032), propget]
+        HRESULT IRegExp_Pattern([out, retval] BSTR* );
+        [id(0x68030032), propput]
+        HRESULT IRegExp_Pattern([in, out] BSTR* );
+        [id(0x6003003a)]
+        HRESULT IRegExp_Replace(
+                        [in, out] BSTR* sourceString, 
+                        [in, out] VARIANT* replaceVar, 
+                        [out, retval] BSTR* );
+        [id(0x6003003b)]
+        HRESULT IRegExp_Test(
+                        [in, out] BSTR* sourceString, 
+                        [out, retval] VARIANT_BOOL* );
+        [id(0x6003003c)]
+        HRESULT IRegExp_Execute(
+                        [in, out] BSTR* sourceString, 
+                        [out, retval] _IRegExpMatchCollection** );
+        [id(0x68030031), propget]
+        HRESULT IRegExpMatch_FirstIndex([out, retval] long* );
+        [id(0x68030030), propget]
+        HRESULT IRegExpMatch_Length([out, retval] long* );
+        [id(0x6803002f), propget]
+        HRESULT IRegExpMatch_SubMatches([out, retval] _IRegExpSubMatches** );
+        [id(0x6803002e), propget]
+        HRESULT IRegExpMatch_Value([out, retval] BSTR* );
+        [id(0x6803002d), propget]
+        HRESULT IRegExpMatchCollection_Count([out, retval] long* );
+        [id(0x6803002c), propget]
+        HRESULT IRegExpMatchCollection_Item(
+                        [in, out] long* Index, 
+                        [out, retval] _IRegExpMatch** );
+        [id(0x6003003e)]
+        HRESULT IRegExpMatchCollection_Enumerator([out, retval] IEnumVARIANT** );
+        [id(0x6803002b), propget]
+        HRESULT IRegExpSubMatches_Count([out, retval] long* );
+        [id(0x6803002a), propget]
+        HRESULT IRegExpSubMatches_Item(
+                        [in, out] long* Index, 
+                        [out, retval] BSTR* );
+        [id(0x60030041)]
+        HRESULT IRegExpSubMatches_Enumerator([out, retval] IEnumVARIANT** );
+        [id(0x60030044)]
+        HRESULT IPcre_Options([out, retval] _IPcreOptions** );
+        [id(0x60030048)]
+        HRESULT IPcre_Replace(
+                        [in] BSTR p_TextToSearch, 
+                        [in] BSTR p_ReplaceWithText, 
+                        [in, optional] BSTR p_RegexToMatch, 
+                        [out, retval] BSTR* );
+        [id(0x60030049)]
+        HRESULT IPcre_Test(
+                        [in] BSTR p_TextToSearch, 
+                        [in, optional] BSTR p_RegexToMatch, 
+                        [out, retval] VARIANT_BOOL* );
+        [id(0x6003004a)]
+        HRESULT IPcre_Execute(
+                        [in] BSTR p_TextToSearch, 
+                        [in, optional] BSTR p_RegexToMatch, 
+                        [out, retval] _IPcreMatches** );
+        [id(0x68030029), propput]
+        HRESULT IPcre_GlobalSearch([in] VARIANT_BOOL );
+        [id(0x68030029), propget]
+        HRESULT IPcre_GlobalSearch([out, retval] VARIANT_BOOL* );
+        [id(0x68030028), propput]
+        HRESULT IPcre_IgnoreCase([in] VARIANT_BOOL );
+        [id(0x68030028), propget]
+        HRESULT IPcre_IgnoreCase([out, retval] VARIANT_BOOL* );
+        [id(0x68030027), propget]
+        HRESULT IPcre_Pattern([out, retval] BSTR* );
+        [id(0x68030027), propput]
+        HRESULT IPcre_Pattern([in] BSTR );
+        [id(0x68030025), propget]
+        HRESULT IPcreMatch_MatchedText([out, retval] BSTR* );
+        [id(0x68030024), propget]
+        HRESULT IPcreMatch_SubMatchCount([out, retval] long* );
+        [id(0x68030023), propget]
+        HRESULT IPcreMatch_SubMatchValue(
+                        [in] long p_ZeroBasedSubMatchIndex, 
+                        [out, retval] BSTR* );
+        [id(0x68030022), propget]
+        HRESULT IPcreMatches_Count([out, retval] long* );
+        [id(0x68030021), propget]
+        HRESULT IPcreMatches_Item(
+                        [in] long p_ZeroBasedIndex, 
+                        [out, retval] _IPcreMatch** );
+        [id(0xfffffffc), hidden]
+        HRESULT IPcreMatches_Enumerator([out, retval] IEnumVARIANT** );
+        [id(0x68030020), propget]
+        HRESULT IPcreMatches_Text([out, retval] BSTR* );
+        [id(0x60030053)]
+        HRESULT IPcreOptions_Compile([out, retval] _IPcreOptionsCompile** );
+        [id(0x60030054)]
+        HRESULT IPcreOptions_General([out, retval] _IPcreOptionsGeneral** );
+        [id(0x60030055)]
+        HRESULT IPcreOptions_Match([out, retval] _IPcreOptionsMatch** );
+        [id(0x60030056)]
+        HRESULT IPcreOptions_Replace([out, retval] _IPcreOptionsReplace** );
+        [id(0x6803001f), propget]
+        HRESULT IPcreOptionsCompile_AllowDuplicateSubpatternNames([out, retval] VARIANT_BOOL* );
+        [id(0x6803001f), propput]
+        HRESULT IPcreOptionsCompile_AllowDuplicateSubpatternNames([in] VARIANT_BOOL );
+        [id(0x6803001e), propget]
+        HRESULT IPcreOptionsCompile_CaseSensitive([out, retval] VARIANT_BOOL* );
+        [id(0x6803001e), propput]
+        HRESULT IPcreOptionsCompile_CaseSensitive([in] VARIANT_BOOL );
+        [id(0x6803001d), propget]
+        HRESULT IPcreOptionsCompile_Anchored([out, retval] VARIANT_BOOL* );
+        [id(0x6803001d), propput]
+        HRESULT IPcreOptionsCompile_Anchored([in] VARIANT_BOOL );
+        [id(0x6803001c), propget]
+        HRESULT IPcreOptionsCompile_AutomaticallyInsertCallouts([out, retval] VARIANT_BOOL* );
+        [id(0x6803001c), propput]
+        HRESULT IPcreOptionsCompile_AutomaticallyInsertCallouts([in] VARIANT_BOOL );
+        [id(0x6803001b), propget]
+        HRESULT IPcreOptionsCompile_IgnorePatternWhitspaceAndComments([out, retval] VARIANT_BOOL* );
+        [id(0x6803001b), propput]
+        HRESULT IPcreOptionsCompile_IgnorePatternWhitspaceAndComments([in] VARIANT_BOOL );
+        [id(0x6803001a), propget]
+        HRESULT IPcreOptionsCompile_DotMatchesAllCharacters([out, retval] VARIANT_BOOL* );
+        [id(0x6803001a), propput]
+        HRESULT IPcreOptionsCompile_DotMatchesAllCharacters([in] VARIANT_BOOL );
+        [id(0x68030019), propget]
+        HRESULT IPcreOptionsCompile_Greedy([out, retval] VARIANT_BOOL* );
+        [id(0x68030019), propput]
+        HRESULT IPcreOptionsCompile_Greedy([in] VARIANT_BOOL );
+        [id(0x68030018), propget]
+        HRESULT IPcreOptionsCompile_CheckUtfValidity([out, retval] VARIANT_BOOL* );
+        [id(0x68030018), propput]
+        HRESULT IPcreOptionsCompile_CheckUtfValidity([in] VARIANT_BOOL );
+        [id(0x68030017), propget]
+        HRESULT IPcreOptionsCompile_Multiline([out, retval] VARIANT_BOOL* );
+        [id(0x68030017), propput]
+        HRESULT IPcreOptionsCompile_Multiline([in] VARIANT_BOOL );
+        [id(0x68030016), propget]
+        HRESULT IPcreOptionsCompile_AllowEmptyClass([out, retval] VARIANT_BOOL* );
+        [id(0x68030016), propput]
+        HRESULT IPcreOptionsCompile_AllowEmptyClass([in] VARIANT_BOOL );
+        [id(0x68030015), propget]
+        HRESULT IPcreOptionsCompile_AlternateBsuxHandling([out, retval] VARIANT_BOOL* );
+        [id(0x68030015), propput]
+        HRESULT IPcreOptionsCompile_AlternateBsuxHandling([in] VARIANT_BOOL );
+        [id(0x68030014), propget]
+        HRESULT IPcreOptionsCompile_DollarMatchesEndOfStringOnly([out, retval] VARIANT_BOOL* );
+        [id(0x68030014), propput]
+        HRESULT IPcreOptionsCompile_DollarMatchesEndOfStringOnly([in] VARIANT_BOOL );
+        [id(0x68030013), propget]
+        HRESULT IPcreOptionsCompile_Utf([out, retval] VARIANT_BOOL* );
+        [id(0x68030013), propput]
+        HRESULT IPcreOptionsCompile_Utf([in] VARIANT_BOOL );
+        [id(0x68030012), propget]
+        HRESULT IPcreOptionsCompile_AlternateCircumflexHandling([out, retval] VARIANT_BOOL* );
+        [id(0x68030012), propput]
+        HRESULT IPcreOptionsCompile_AlternateCircumflexHandling([in] VARIANT_BOOL );
+        [id(0x68030011), propget]
+        HRESULT IPcreOptionsGeneral_GlobalSearch([out, retval] VARIANT_BOOL* );
+        [id(0x68030011), propput]
+        HRESULT IPcreOptionsGeneral_GlobalSearch([in] VARIANT_BOOL );
+        [id(0x68030010), propget]
+        HRESULT IPcreOptionsMatch_Anchored([out, retval] VARIANT_BOOL* );
+        [id(0x68030010), propput]
+        HRESULT IPcreOptionsMatch_Anchored([in] VARIANT_BOOL );
+        [id(0x6803000f), propget]
+        HRESULT IPcreOptionsMatch_SubjectIsBeginningOfLine([out, retval] VARIANT_BOOL* );
+        [id(0x6803000f), propput]
+        HRESULT IPcreOptionsMatch_SubjectIsBeginningOfLine([in] VARIANT_BOOL );
+        [id(0x6803000e), propget]
+        HRESULT IPcreOptionsMatch_SubjectIsEndOfLine([out, retval] VARIANT_BOOL* );
+        [id(0x6803000e), propput]
+        HRESULT IPcreOptionsMatch_SubjectIsEndOfLine([in] VARIANT_BOOL );
+        [id(0x6803000d), propget]
+        HRESULT IPcreOptionsMatch_MatchIfEmpty([out, retval] VARIANT_BOOL* );
+        [id(0x6803000d), propput]
+        HRESULT IPcreOptionsMatch_MatchIfEmpty([in] VARIANT_BOOL );
+        [id(0x6803000c), propget]
+        HRESULT IPcreOptionsMatch_MatchIfEmptyAtStart([out, retval] VARIANT_BOOL* );
+        [id(0x6803000c), propput]
+        HRESULT IPcreOptionsMatch_MatchIfEmptyAtStart([in] VARIANT_BOOL );
+        [id(0x6803000b), propget]
+        HRESULT IPcreOptionsMatch_PerformUtfCheck([out, retval] VARIANT_BOOL* );
+        [id(0x6803000b), propput]
+        HRESULT IPcreOptionsMatch_PerformUtfCheck([in] VARIANT_BOOL );
+        [id(0x6803000a), propget]
+        HRESULT IPcreOptionsMatch_MatchedEventEnabled([out, retval] VARIANT_BOOL* );
+        [id(0x6803000a), propput]
+        HRESULT IPcreOptionsMatch_MatchedEventEnabled([in] VARIANT_BOOL );
+        [id(0x68030009), propget]
+        HRESULT IPcreOptionsMatch_MatchedEventSubstitutionCacheSize([out, retval] long* );
+        [id(0x68030009), propput]
+        HRESULT IPcreOptionsMatch_MatchedEventSubstitutionCacheSize([in] long );
+        [id(0x68030008), propget]
+        HRESULT IPcreOptionsReplace_Anchored([out, retval] VARIANT_BOOL* );
+        [id(0x68030008), propput]
+        HRESULT IPcreOptionsReplace_Anchored([in] VARIANT_BOOL );
+        [id(0x68030007), propget]
+        HRESULT IPcreOptionsReplace_SubjectIsBeginningOfLine([out, retval] VARIANT_BOOL* );
+        [id(0x68030007), propput]
+        HRESULT IPcreOptionsReplace_SubjectIsBeginningOfLine([in] VARIANT_BOOL );
+        [id(0x68030006), propget]
+        HRESULT IPcreOptionsReplace_SubjectIsEndOfLine([out, retval] VARIANT_BOOL* );
+        [id(0x68030006), propput]
+        HRESULT IPcreOptionsReplace_SubjectIsEndOfLine([in] VARIANT_BOOL );
+        [id(0x68030005), propget]
+        HRESULT IPcreOptionsReplace_MatchIfEmpty([out, retval] VARIANT_BOOL* );
+        [id(0x68030005), propput]
+        HRESULT IPcreOptionsReplace_MatchIfEmpty([in] VARIANT_BOOL );
+        [id(0x68030004), propget]
+        HRESULT IPcreOptionsReplace_MatchIfEmptyAtStart([out, retval] VARIANT_BOOL* );
+        [id(0x68030004), propput]
+        HRESULT IPcreOptionsReplace_MatchIfEmptyAtStart([in] VARIANT_BOOL );
+        [id(0x68030003), propget]
+        HRESULT IPcreOptionsReplace_PerformUtfCheck([out, retval] VARIANT_BOOL* );
+        [id(0x68030003), propput]
+        HRESULT IPcreOptionsReplace_PerformUtfCheck([in] VARIANT_BOOL );
+        [id(0x68030002), propget]
+        HRESULT IPcreOptionsReplace_ErrorOnUnknownCapturingGroups([out, retval] VARIANT_BOOL* );
+        [id(0x68030002), propput]
+        HRESULT IPcreOptionsReplace_ErrorOnUnknownCapturingGroups([in] VARIANT_BOOL );
+        [id(0x68030001), propget]
+        HRESULT IPcreOptionsReplace_TreatUnknownCapturingGroupsAsEmptyStrings([out, retval] VARIANT_BOOL* );
+        [id(0x68030001), propput]
+        HRESULT IPcreOptionsReplace_TreatUnknownCapturingGroupsAsEmptyStrings([in] VARIANT_BOOL );
+        [id(0x68030000), propget]
+        HRESULT IPcreOptionsReplace_ExtendedReplacement([out, retval] VARIANT_BOOL* );
+        [id(0x68030000), propput]
+        HRESULT IPcreOptionsReplace_ExtendedReplacement([in] VARIANT_BOOL );
+    };
+
+    [
+      uuid(D3230116-B9D7-4B4D-A420-DB7D8D4547C7),
+      version(1.0),
+      appobject
+    ]
+    coclass cRegExp {
+        [default] interface _cRegExp;
+        interface _IRegExpMatch;
+        interface _IRegExpMatchCollection;
+        interface _IRegExpSubMatches;
+        interface _IRegExp;
+        interface _IPcre;
+        interface _IPcreMatch;
+        interface _IPcreMatches;
+        interface _IPcreOptions;
+        interface _IPcreOptionsGeneral;
+        interface _IPcreOptionsMatch;
+        interface _IPcreOptionsReplace;
+        interface _IPcreOptionsCompile;
+        [default, source] dispinterface __cRegExp;
+    };
+
+    [
+      odl,
+      uuid(1AD499AD-2541-48CC-B73A-CAE1200E8B92),
+      version(1.0),
+      hidden,
+      dual,
+      nonextensible,
+      oleautomation
+    ]
+    interface _IRegExpMatch : IDispatch {
+        [id(0x60030003), hidden]
+        HRESULT Init(
+                        [in, out] long* FirstIndex, 
+                        [in, out] BSTR* Value, 
+                        [in, out] _IRegExpSubMatches** SubMatches);
+        [id(0x68030002), propget]
+        HRESULT FirstIndex([out, retval] long* );
+        [id(0x68030001), propget]
+        HRESULT Length([out, retval] long* );
+        [id(0x68030000), propget]
+        HRESULT SubMatches([out, retval] _IRegExpSubMatches** );
+        [id(00000000), propget]
+        HRESULT Value([out, retval] BSTR* );
+    };
+
+    [
+      uuid(CE2CFA24-D31C-425F-8637-165F701A343F),
+      version(1.0),
+      noncreatable
+    ]
+    coclass IRegExpMatch {
+        [default] interface _IRegExpMatch;
+    };
+
+    [
+      odl,
+      uuid(8F67E028-A0B2-4D44-B80A-0C54AF4D8E82),
+      version(1.0),
+      hidden,
+      dual,
+      nonextensible,
+      oleautomation
+    ]
+    interface _IRegExpMatchCollection : IDispatch {
+        [id(0x60030002), hidden]
+        HRESULT InitClass();
+        [id(0x68030001), propget]
+        HRESULT Count([out, retval] long* );
+        [id(0x68030000), propget]
+        HRESULT Item(
+                        [in, out] long* Index, 
+                        [out, retval] _IRegExpMatch** );
+        [id(0xfffffffc), hidden]
+        HRESULT Enumerator([out, retval] IEnumVARIANT** );
+        [id(0x60030003), hidden]
+        HRESULT Add(
+                        [in, out] long* FirstIndex, 
+                        [in, out] BSTR* Value, 
+                        [in, out] _IRegExpSubMatches** SubMatches);
+    };
+
+    [
+      uuid(6562B2E3-E479-49C5-9A83-331D9A050298),
+      version(1.0),
+      noncreatable
+    ]
+    coclass IRegExpMatchCollection {
+        [default] interface _IRegExpMatchCollection;
+    };
+
+    [
+      odl,
+      uuid(173B2400-48FA-4BE5-A9E7-518DAB7EA206),
+      version(1.0),
+      hidden,
+      dual,
+      nonextensible,
+      oleautomation
+    ]
+    interface _IRegExpSubMatches : IDispatch {
+        [id(0x60030001), hidden]
+        HRESULT InitClass();
+        [id(0x68030000), propget]
+        HRESULT Count([out, retval] long* );
+        [id(00000000), propget]
+        HRESULT Item(
+                        [in, out] long* Index, 
+                        [out, retval] BSTR* );
+        [id(0xfffffffc), hidden]
+        HRESULT Enumerator([out, retval] IEnumVARIANT** );
+        [id(0x60030002), hidden]
+        HRESULT Add([in, out] BSTR* sValue);
+    };
+
+    [
+      uuid(7B0563F0-FFC8-4632-A954-504765BCC924),
+      version(1.0),
+      noncreatable
+    ]
+    coclass IRegExpSubMatches {
+        [default] interface _IRegExpSubMatches;
+    };
+
+    [
+      odl,
+      uuid(6EA8F0FF-6951-43DF-9912-AA14D7A2B59F),
+      version(1.0),
+      hidden,
+      dual,
+      nonextensible,
+      oleautomation
+    ]
+    interface _IRegExp : IDispatch {
+        [id(0x68030004), propget]
+        HRESULT UsePcre([out, retval] VARIANT_BOOL* );
+        [id(0x68030004), propput]
+        HRESULT UsePcre([in, out] VARIANT_BOOL* );
+        [id(0x68030003), propget]
+        HRESULT Global([out, retval] VARIANT_BOOL* );
+        [id(0x68030003), propput]
+        HRESULT Global([in, out] VARIANT_BOOL* );
+        [id(0x68030002), propget]
+        HRESULT IgnoreCase([out, retval] VARIANT_BOOL* );
+        [id(0x68030002), propput]
+        HRESULT IgnoreCase([in, out] VARIANT_BOOL* );
+        [id(0x68030001), propget]
+        HRESULT Multiline([out, retval] VARIANT_BOOL* );
+        [id(0x68030001), propput]
+        HRESULT Multiline([in, out] VARIANT_BOOL* );
+        [id(0x68030000), propget]
+        HRESULT Pattern([out, retval] BSTR* );
+        [id(0x68030000), propput]
+        HRESULT Pattern([in, out] BSTR* );
+        [id(0x60030005)]
+        HRESULT Replace(
+                        [in, out] BSTR* sourceString, 
+                        [in, out] VARIANT* replaceVar, 
+                        [out, retval] BSTR* );
+        [id(0x60030006)]
+        HRESULT Test(
+                        [in, out] BSTR* sourceString, 
+                        [out, retval] VARIANT_BOOL* );
+        [id(0x60030007)]
+        HRESULT Execute(
+                        [in, out] BSTR* sourceString, 
+                        [out, retval] _IRegExpMatchCollection** );
+    };
+
+    [
+      uuid(C5211BD6-E817-495C-8CD6-8C21EF91306D),
+      version(1.0),
+      appobject
+    ]
+    coclass IRegExp {
+        [default] interface _IRegExp;
+    };
+
+    [
+      odl,
+      uuid(92D6C823-DD0C-4936-8E19-A179AE3DB332),
+      version(1.0),
+      hidden,
+      dual,
+      nonextensible,
+      oleautomation
+    ]
+    interface _IPcre : IDispatch {
+        [id(0x60030003)]
+        HRESULT InitClass();
+        [id(0x60030004)]
+        HRESULT TerminateClass();
+        [id(0x60030005)]
+        HRESULT Options([out, retval] _IPcreOptions** );
+        [id(0x60030006)]
+        HRESULT Replace(
+                        [in] BSTR p_TextToSearch, 
+                        [in] BSTR p_ReplaceWithText, 
+                        [in, optional] BSTR p_RegexToMatch, 
+                        [out, retval] BSTR* );
+        [id(0x60030007)]
+        HRESULT Test(
+                        [in] BSTR p_TextToSearch, 
+                        [in, optional] BSTR p_RegexToMatch, 
+                        [out, retval] VARIANT_BOOL* );
+        [id(0x60030008)]
+        HRESULT Execute(
+                        [in] BSTR p_TextToSearch, 
+                        [in, optional] BSTR p_RegexToMatch, 
+                        [out, retval] _IPcreMatches** );
+        [id(0x68030002), propput]
+        HRESULT GlobalSearch([in] VARIANT_BOOL );
+        [id(0x68030002), propget]
+        HRESULT GlobalSearch([out, retval] VARIANT_BOOL* );
+        [id(0x68030001), propput]
+        HRESULT IgnoreCase([in] VARIANT_BOOL );
+        [id(0x68030001), propget]
+        HRESULT IgnoreCase([out, retval] VARIANT_BOOL* );
+        [id(0x68030000), propget]
+        HRESULT Pattern([out, retval] BSTR* );
+        [id(0x68030000), propput]
+        HRESULT Pattern([in] BSTR );
+    };
+
+    [
+      uuid(83FFA119-4E48-4285-89B5-F7B6C21E7CA9),
+      version(1.0),
+      noncreatable
+    ]
+    coclass IPcre {
+        [default] interface _IPcre;
+        [default, source] dispinterface __IPcre;
+    };
+
+    [
+      odl,
+      uuid(E55F55A3-DCA0-405C-A99A-201BFF303F46),
+      version(1.0),
+      hidden,
+      dual,
+      nonextensible,
+      oleautomation
+    ]
+    interface _IPcreMatch : IDispatch {
+        [id(0x68030003), propget]
+        HRESULT SearchedText([out, retval] BSTR* );
+        [id(0x68030002), propget]
+        HRESULT MatchedText([out, retval] BSTR* );
+        [id(0x68030001), propget]
+        HRESULT SubMatchCount([out, retval] long* );
+        [id(0x68030000), propget]
+        HRESULT SubMatchValue(
+                        [in] long p_ZeroBasedSubMatchIndex, 
+                        [out, retval] BSTR* );
+        [id(0x60030004)]
+        HRESULT Init(
+                        [in] BSTR p_SearchedText, 
+                        [in, out] SAFEARRAY(long)* pa_OvectorArray, 
+                        [in] long p_MatchCount);
+    };
+
+    [
+      uuid(BAC5EBDB-75C6-436E-9916-B5441C61F5B7),
+      version(1.0),
+      noncreatable
+    ]
+    coclass IPcreMatch {
+        [default] interface _IPcreMatch;
+    };
+
+    [
+      odl,
+      uuid(4C369EA8-42A8-4989-B08F-3078A39E5280),
+      version(1.0),
+      hidden,
+      dual,
+      nonextensible,
+      oleautomation
+    ]
+    interface _IPcreMatches : IDispatch {
+        [id(0x60030002)]
+        HRESULT InitClass();
+        [id(0x68030001), propget]
+        HRESULT Count([out, retval] long* );
+        [id(00000000), propget]
+        HRESULT Item(
+                        [in] long p_ZeroBasedIndex, 
+                        [out, retval] _IPcreMatch** );
+        [id(0xfffffffc), hidden]
+        HRESULT Enumerator([out, retval] IEnumVARIANT** );
+        [id(0x68030000), propget]
+        HRESULT Text([out, retval] BSTR* );
+        [id(0x60030003)]
+        HRESULT AppendText([in] BSTR p_Text);
+        [id(0x60030004)]
+        HRESULT Add(
+                        [in] BSTR p_TextToSearch, 
+                        [in, out] SAFEARRAY(long)* pa_OvectorArray, 
+                        [in] long p_MatchCount);
+    };
+
+    [
+      uuid(D467A140-8DAC-49A4-AF11-834E6679B18F),
+      version(1.0),
+      noncreatable
+    ]
+    coclass IPcreMatches {
+        [default] interface _IPcreMatches;
+    };
+
+    [
+      odl,
+      uuid(84766DD4-706F-4788-9753-E1F70195C2EB),
+      version(1.0),
+      hidden,
+      dual,
+      nonextensible,
+      oleautomation
+    ]
+    interface _IPcreOptions : IDispatch {
+        [id(0x60030000)]
+        HRESULT Compile([out, retval] _IPcreOptionsCompile** );
+        [id(0x60030001)]
+        HRESULT General([out, retval] _IPcreOptionsGeneral** );
+        [id(0x60030002)]
+        HRESULT Match([out, retval] _IPcreOptionsMatch** );
+        [id(0x60030003)]
+        HRESULT Replace([out, retval] _IPcreOptionsReplace** );
+    };
+
+    [
+      uuid(F5A6BC40-2650-4DF5-A692-5B484EC30A43),
+      version(1.0),
+      noncreatable
+    ]
+    coclass IPcreOptions {
+        [default] interface _IPcreOptions;
+    };
+
+    [
+      odl,
+      uuid(83CAC5CF-382D-4EE7-AF5C-B40F3E45BBFF),
+      version(1.0),
+      hidden,
+      dual,
+      nonextensible,
+      oleautomation
+    ]
+    interface _IPcreOptionsCompile : IDispatch {
+        [id(0x6003000e)]
+        HRESULT InitClass();
+        [id(0x6003000f)]
+        HRESULT OptionFlags([out, retval] long* );
+        [id(0x6803000d), propget]
+        HRESULT AllowDuplicateSubpatternNames([out, retval] VARIANT_BOOL* );
+        [id(0x6803000d), propput]
+        HRESULT AllowDuplicateSubpatternNames([in] VARIANT_BOOL );
+        [id(0x6803000c), propget]
+        HRESULT CaseSensitive([out, retval] VARIANT_BOOL* );
+        [id(0x6803000c), propput]
+        HRESULT CaseSensitive([in] VARIANT_BOOL );
+        [id(0x6803000b), propget]
+        HRESULT Anchored([out, retval] VARIANT_BOOL* );
+        [id(0x6803000b), propput]
+        HRESULT Anchored([in] VARIANT_BOOL );
+        [id(0x6803000a), propget]
+        HRESULT AutomaticallyInsertCallouts([out, retval] VARIANT_BOOL* );
+        [id(0x6803000a), propput]
+        HRESULT AutomaticallyInsertCallouts([in] VARIANT_BOOL );
+        [id(0x68030009), propget]
+        HRESULT IgnorePatternWhitspaceAndComments([out, retval] VARIANT_BOOL* );
+        [id(0x68030009), propput]
+        HRESULT IgnorePatternWhitspaceAndComments([in] VARIANT_BOOL );
+        [id(0x68030008), propget]
+        HRESULT DotMatchesAllCharacters([out, retval] VARIANT_BOOL* );
+        [id(0x68030008), propput]
+        HRESULT DotMatchesAllCharacters([in] VARIANT_BOOL );
+        [id(0x68030007), propget]
+        HRESULT Greedy([out, retval] VARIANT_BOOL* );
+        [id(0x68030007), propput]
+        HRESULT Greedy([in] VARIANT_BOOL );
+        [id(0x68030006), propget]
+        HRESULT CheckUtfValidity([out, retval] VARIANT_BOOL* );
+        [id(0x68030006), propput]
+        HRESULT CheckUtfValidity([in] VARIANT_BOOL );
+        [id(0x68030005), propget]
+        HRESULT Multiline([out, retval] VARIANT_BOOL* );
+        [id(0x68030005), propput]
+        HRESULT Multiline([in] VARIANT_BOOL );
+        [id(0x68030004), propget]
+        HRESULT AllowEmptyClass([out, retval] VARIANT_BOOL* );
+        [id(0x68030004), propput]
+        HRESULT AllowEmptyClass([in] VARIANT_BOOL );
+        [id(0x68030003), propget]
+        HRESULT AlternateBsuxHandling([out, retval] VARIANT_BOOL* );
+        [id(0x68030003), propput]
+        HRESULT AlternateBsuxHandling([in] VARIANT_BOOL );
+        [id(0x68030002), propget]
+        HRESULT DollarMatchesEndOfStringOnly([out, retval] VARIANT_BOOL* );
+        [id(0x68030002), propput]
+        HRESULT DollarMatchesEndOfStringOnly([in] VARIANT_BOOL );
+        [id(0x68030001), propget]
+        HRESULT Utf([out, retval] VARIANT_BOOL* );
+        [id(0x68030001), propput]
+        HRESULT Utf([in] VARIANT_BOOL );
+        [id(0x68030000), propget]
+        HRESULT AlternateCircumflexHandling([out, retval] VARIANT_BOOL* );
+        [id(0x68030000), propput]
+        HRESULT AlternateCircumflexHandling([in] VARIANT_BOOL );
+    };
+
+    [
+      uuid(8963B3DF-E1BC-4D26-8A68-E9FA4C7007F0),
+      version(1.0),
+      noncreatable
+    ]
+    coclass IPcreOptionsCompile {
+        [default] interface _IPcreOptionsCompile;
+    };
+
+    [
+      odl,
+      uuid(EEFF2C6D-2DB9-4548-B97A-F6A15749EABF),
+      version(1.0),
+      hidden,
+      dual,
+      nonextensible,
+      oleautomation
+    ]
+    interface _IPcreOptionsGeneral : IDispatch {
+        [id(0x68030000), propget]
+        HRESULT GlobalSearch([out, retval] VARIANT_BOOL* );
+        [id(0x68030000), propput]
+        HRESULT GlobalSearch([in] VARIANT_BOOL );
+    };
+
+    [
+      uuid(0746DF9C-BC47-48EA-986B-5520C0D99D4D),
+      version(1.0),
+      noncreatable
+    ]
+    coclass IPcreOptionsGeneral {
+        [default] interface _IPcreOptionsGeneral;
+    };
+
+    [
+      odl,
+      uuid(B52A899C-5C75-4DEE-9E25-A1AC34D58DB3),
+      version(1.0),
+      hidden,
+      dual,
+      nonextensible,
+      oleautomation
+    ]
+    interface _IPcreOptionsMatch : IDispatch {
+        [id(0x60030008)]
+        HRESULT InitClass();
+        [id(0x60030009)]
+        HRESULT OptionFlags([out, retval] long* );
+        [id(0x68030007), propget]
+        HRESULT Anchored([out, retval] VARIANT_BOOL* );
+        [id(0x68030007), propput]
+        HRESULT Anchored([in] VARIANT_BOOL );
+        [id(0x68030006), propget]
+        HRESULT SubjectIsBeginningOfLine([out, retval] VARIANT_BOOL* );
+        [id(0x68030006), propput]
+        HRESULT SubjectIsBeginningOfLine([in] VARIANT_BOOL );
+        [id(0x68030005), propget]
+        HRESULT SubjectIsEndOfLine([out, retval] VARIANT_BOOL* );
+        [id(0x68030005), propput]
+        HRESULT SubjectIsEndOfLine([in] VARIANT_BOOL );
+        [id(0x68030004), propget]
+        HRESULT MatchIfEmpty([out, retval] VARIANT_BOOL* );
+        [id(0x68030004), propput]
+        HRESULT MatchIfEmpty([in] VARIANT_BOOL );
+        [id(0x68030003), propget]
+        HRESULT MatchIfEmptyAtStart([out, retval] VARIANT_BOOL* );
+        [id(0x68030003), propput]
+        HRESULT MatchIfEmptyAtStart([in] VARIANT_BOOL );
+        [id(0x68030002), propget]
+        HRESULT PerformUtfCheck([out, retval] VARIANT_BOOL* );
+        [id(0x68030002), propput]
+        HRESULT PerformUtfCheck([in] VARIANT_BOOL );
+        [id(0x68030001), propget]
+        HRESULT MatchedEventEnabled([out, retval] VARIANT_BOOL* );
+        [id(0x68030001), propput]
+        HRESULT MatchedEventEnabled([in] VARIANT_BOOL );
+        [id(0x68030000), propget]
+        HRESULT MatchedEventSubstitutionCacheSize([out, retval] long* );
+        [id(0x68030000), propput]
+        HRESULT MatchedEventSubstitutionCacheSize([in] long );
+    };
+
+    [
+      uuid(450EFCA9-F1CD-4F30-AF6A-905507173A64),
+      version(1.0),
+      noncreatable
+    ]
+    coclass IPcreOptionsMatch {
+        [default] interface _IPcreOptionsMatch;
+    };
+
+    [
+      odl,
+      uuid(4E6B8E79-F8D6-42BB-BD34-1DA55F87FFA2),
+      version(1.0),
+      hidden,
+      dual,
+      nonextensible,
+      oleautomation
+    ]
+    interface _IPcreOptionsReplace : IDispatch {
+        [id(0x60030009)]
+        HRESULT InitClass();
+        [id(0x6003000a)]
+        HRESULT OptionFlags([out, retval] long* );
+        [id(0x68030008), propget]
+        HRESULT Anchored([out, retval] VARIANT_BOOL* );
+        [id(0x68030008), propput]
+        HRESULT Anchored([in] VARIANT_BOOL );
+        [id(0x68030007), propget]
+        HRESULT SubjectIsBeginningOfLine([out, retval] VARIANT_BOOL* );
+        [id(0x68030007), propput]
+        HRESULT SubjectIsBeginningOfLine([in] VARIANT_BOOL );
+        [id(0x68030006), propget]
+        HRESULT SubjectIsEndOfLine([out, retval] VARIANT_BOOL* );
+        [id(0x68030006), propput]
+        HRESULT SubjectIsEndOfLine([in] VARIANT_BOOL );
+        [id(0x68030005), propget]
+        HRESULT MatchIfEmpty([out, retval] VARIANT_BOOL* );
+        [id(0x68030005), propput]
+        HRESULT MatchIfEmpty([in] VARIANT_BOOL );
+        [id(0x68030004), propget]
+        HRESULT MatchIfEmptyAtStart([out, retval] VARIANT_BOOL* );
+        [id(0x68030004), propput]
+        HRESULT MatchIfEmptyAtStart([in] VARIANT_BOOL );
+        [id(0x68030003), propget]
+        HRESULT PerformUtfCheck([out, retval] VARIANT_BOOL* );
+        [id(0x68030003), propput]
+        HRESULT PerformUtfCheck([in] VARIANT_BOOL );
+        [id(0x68030002), propget]
+        HRESULT ErrorOnUnknownCapturingGroups([out, retval] VARIANT_BOOL* );
+        [id(0x68030002), propput]
+        HRESULT ErrorOnUnknownCapturingGroups([in] VARIANT_BOOL );
+        [id(0x68030001), propget]
+        HRESULT TreatUnknownCapturingGroupsAsEmptyStrings([out, retval] VARIANT_BOOL* );
+        [id(0x68030001), propput]
+        HRESULT TreatUnknownCapturingGroupsAsEmptyStrings([in] VARIANT_BOOL );
+        [id(0x68030000), propget]
+        HRESULT ExtendedReplacement([out, retval] VARIANT_BOOL* );
+        [id(0x68030000), propput]
+        HRESULT ExtendedReplacement([in] VARIANT_BOOL );
+    };
+
+    [
+      uuid(75F697AF-37F3-44BA-B98F-7FBD85535C20),
+      version(1.0),
+      noncreatable
+    ]
+    coclass IPcreOptionsReplace {
+        [default] interface _IPcreOptionsReplace;
+    };
+
+    [
+      uuid(125AEC9B-5F35-4E29-A8AF-84DCD85C5DC4),
+      version(1.0),
+      hidden,
+      nonextensible
+    ]
+    dispinterface __cRegExp {
+        properties:
+        methods:
+            [id(0x00000001)]
+            void Matched(
+                            [in, out] BSTR* p_MatchedText, 
+                            [in, out] e_SubstitutionAction* p_SubstitutionAction, 
+                            [in, out] VARIANT_BOOL* p_Cancel);
+    };
+
+    [
+      uuid(52A52FBF-0968-47A9-A3CE-0B38246A3503),
+      version(1.0),
+      hidden,
+      nonextensible
+    ]
+    dispinterface __IPcre {
+        properties:
+        methods:
+            [id(0x00000001)]
+            void Matched(
+                            [in, out] BSTR* p_MatchedText, 
+                            [in, out] e_SubstitutionAction* p_SubstitutionAction, 
+                            [in, out] VARIANT_BOOL* p_Cancel);
+    };
+
+    typedef [uuid(3C1A57D6-6EA5-4C50-94EB-3A4E5A268523), version(1.0)]
+    enum {
+        PCRE_RC_OK = 0,
+        PCRE_RC_ERROR_NOMATCH = 0xffffffff,
+        PCRE_RC_ERROR_PARTIAL = 0xfffffffe,
+        PCRE_RC_ERROR_UTF8_ERR1 = 0xfffffffd,
+        PCRE_RC_ERROR_UTF8_ERR2 = 0xfffffffc,
+        PCRE_RC_ERROR_UTF8_ERR3 = 0xfffffffb,
+        PCRE_RC_ERROR_UTF8_ERR4 = 0xfffffffa,
+        PCRE_RC_ERROR_UTF8_ERR5 = 0xfffffff9,
+        PCRE_RC_ERROR_UTF8_ERR6 = 0xfffffff8,
+        PCRE_RC_ERROR_UTF8_ERR7 = 0xfffffff7,
+        PCRE_RC_ERROR_UTF8_ERR8 = 0xfffffff6,
+        PCRE_RC_ERROR_UTF8_ERR9 = 0xfffffff5,
+        PCRE_RC_ERROR_UTF8_ERR10 = 0xfffffff4,
+        PCRE_RC_ERROR_UTF8_ERR11 = 0xfffffff3,
+        PCRE_RC_ERROR_UTF8_ERR12 = 0xfffffff2,
+        PCRE_RC_ERROR_UTF8_ERR13 = 0xfffffff1,
+        PCRE_RC_ERROR_UTF8_ERR14 = 0xfffffff0,
+        PCRE_RC_ERROR_UTF8_ERR15 = 0xffffffef,
+        PCRE_RC_ERROR_UTF8_ERR16 = 0xffffffee,
+        PCRE_RC_ERROR_UTF8_ERR17 = 0xffffffed,
+        PCRE_RC_ERROR_UTF8_ERR18 = 0xffffffec,
+        PCRE_RC_ERROR_UTF8_ERR19 = 0xffffffeb,
+        PCRE_RC_ERROR_UTF8_ERR20 = 0xffffffea,
+        PCRE_RC_ERROR_UTF8_ERR21 = 0xffffffe9,
+        PCRE_RC_ERROR_UTF16_ERR1 = 0xffffffe8,
+        PCRE_RC_ERROR_UTF16_ERR2 = 0xffffffe7,
+        PCRE_RC_ERROR_UTF16_ERR3 = 0xffffffe6,
+        PCRE_RC_ERROR_UTF32_ERR1 = 0xffffffe5,
+        PCRE_RC_ERROR_UTF32_ERR2 = 0xffffffe4,
+        PCRE_RC_ERROR_BADDATA = 0xffffffe3,
+        PCRE_RC_ERROR_MIXEDTABLES = 0xffffffe2,
+        PCRE_RC_ERROR_BADMAGIC = 0xffffffe1,
+        PCRE_RC_ERROR_BADMODE = 0xffffffe0,
+        PCRE_RC_ERROR_BADOFFSET = 0xffffffdf,
+        PCRE_RC_ERROR_BADOPTION = 0xffffffde,
+        PCRE_RC_ERROR_BADREPLACEMENT = 0xffffffdd,
+        PCRE_RC_ERROR_BADUTFOFFSET = 0xffffffdc,
+        PCRE_RC_ERROR_CALLOUT = 0xffffffdb,
+        PCRE_RC_ERROR_DFA_BADRESTART = 0xffffffda,
+        PCRE_RC_ERROR_DFA_RECURSE = 0xffffffd9,
+        PCRE_RC_ERROR_DFA_UCOND = 0xffffffd8,
+        PCRE_RC_ERROR_DFA_UFUNC = 0xffffffd7,
+        PCRE_RC_ERROR_DFA_UITEM = 0xffffffd6,
+        PCRE_RC_ERROR_DFA_WSSIZE = 0xffffffd5,
+        PCRE_RC_ERROR_INTERNAL = 0xffffffd4,
+        PCRE_RC_ERROR_JIT_BADOPTION = 0xffffffd3,
+        PCRE_RC_ERROR_JIT_STACKLIMIT = 0xffffffd2,
+        PCRE_RC_ERROR_MATCHLIMIT = 0xffffffd1,
+        PCRE_RC_ERROR_NOMEMORY = 0xffffffd0,
+        PCRE_RC_ERROR_NOSUBSTRING = 0xffffffcf,
+        PCRE_RC_ERROR_NOUNIQUESUBSTRING = 0xffffffce,
+        PCRE_RC_ERROR_NULL = 0xffffffcd,
+        PCRE_RC_ERROR_RECURSELOOP = 0xffffffcc,
+        PCRE_RC_ERROR_RECURSIONLIMIT = 0xffffffcb,
+        PCRE_RC_ERROR_UNAVAILABLE = 0xffffffca,
+        PCRE_RC_ERROR_UNSET = 0xffffffc9,
+        PCRE_RC_ERROR_BADOFFSETLIMIT = 0xffffffc8,
+        PCRE_RC_ERROR_BADREPESCAPE = 0xffffffc7,
+        PCRE_RC_ERROR_REPMISSINGBRACE = 0xffffffc6,
+        PCRE_RC_ERROR_BADSUBSTITUTION = 0xffffffc5,
+        PCRE_RC_ERROR_BADSUBSPATTERN = 0xffffffc4,
+        PCRE_RC_ERROR_TOOMANYREPLACE = 0xffffffc3,
+        PCRE_RC_ERROR_BADSERIALIZEDDATA = 0xffffffc2,
+        _PCRE_RC_ERROR_FIRST = 0xffffffff,
+        _PCRE_RC_ERROR_LAST = 0xffffffc2
+    } PCRE_ReturnCode;
+
+    typedef [uuid(16782C76-49DA-4AD9-8BC8-619657EB7874), version(1.0)]
+    enum {
+        PCRE_CO_ALLOW_EMPTY_CLASS = 1,
+        PCRE_CO_ALT_BSUX = 2,
+        PCRE_CO_AUTO_CALLOUT = 4,
+        PCRE_CO_CASELESS = 8,
+        PCRE_CO_DOLLAR_ENDONLY = 16,
+        PCRE_CO_DOTALL = 32,
+        PCRE_CO_DUPNAMES = 64,
+        PCRE_CO_EXTENDED = 128,
+        PCRE_CO_FIRSTLINE = 256,
+        PCRE_CO_MATCH_UNSET_BACKREF = 512,
+        PCRE_CO_MULTILINE = 1024,
+        PCRE_CO_NEVER_UCP = 2048,
+        PCRE_CO_NEVER_UTF = 4096,
+        PCRE_CO_NO_AUTO_CAPTURE = 8192,
+        PCRE_CO_NO_AUTO_POSSESS = 16384,
+        PCRE_CO_NO_DOTSTAR_ANCHOR = 32768,
+        PCRE_CO_NO_START_OPTIMIZE = 0x00010000,
+        PCRE_CO_UCP = 0x00020000,
+        PCRE_CO_UNGREEDY = 0x00040000,
+        PCRE_CO_UTF = 0x00080000,
+        PCRE_CO_NEVER_BACKSLASH_C = 0x00100000,
+        PCRE_CO_ALT_CIRCUMFLEX = 0x00200000,
+        PCRE_CO_ALT_VERBNAMES = 0x00400000,
+        PCRE_CO_USE_OFFSET_LIMIT = 0x00800000
+    } PCRE_CompileOptions;
+
+    typedef [uuid(F5FEB68A-2630-44D5-AA00-78739450FF0A), version(1.0)]
+    enum {
+        PCRE2_ERROR_NOMATCH = 0xffffffff,
+        PCRE2_SUBSTITUTE_GLOBAL = 256,
+        PCRE2_ANCHORED = 0x80000000,
+        PCRE2_NO_UTF_CHECK = 0x40000000,
+        PCRE2_NOTBOL = 1,
+        PCRE2_NOTEOL = 2,
+        PCRE2_NOTEMPTY = 4,
+        PCRE2_NOTEMPTY_ATSTART = 8,
+        PCRE2_PARTIAL_SOFT = 16,
+        PCRE2_PARTIAL_HARD = 32,
+        PCRE2_ALLOW_EMPTY_CLASS = 1,
+        PCRE2_ALT_BSUX = 2,
+        PCRE2_CASELESS = 8,
+        PCRE2_DOLLAR_ENDONLY = 16,
+        PCRE2_DOTALL = 32,
+        PCRE2_EXTENDED = 128,
+        PCRE2_FIRSTLINE = 256,
+        PCRE2_MULTILINE = 1024,
+        PCRE2_UNGREEDY = 0x00040000,
+        PCRE2_UTF = 0x00080000,
+        PCRE2_NEVER_BACKSLASH_C = 0x00100000,
+        PCRE2_ALT_CIRCUMFLEX = 0x00200000,
+        PCRE2_AUTO_CALLOUT = 4,
+        PCRE2_DUPNAMES = 64,
+        PCRE2_MATCH_UNSET_BACKREF = 512,
+        PCRE2_NEVER_UCP = 2048,
+        PCRE2_NEVER_UTF = 4096,
+        PCRE2_NO_AUTO_CAPTURE = 8192,
+        PCRE2_NO_AUTO_POSSESS = 16384,
+        PCRE2_NO_DOTSTAR_ANCHOR = 0xffff8000,
+        PCRE2_NO_START_OPTIMIZE = 0x00010000,
+        PCRE2_UCP = 0x00020000,
+        PCRE2_SUBSTITUTE_EXTENDED = 512,
+        PCRE2_SUBSTITUTE_UNSET_EMPTY = 1024,
+        PCRE2_SUBSTITUTE_UNKNOWN_UNSET = 2048
+    } PCRE_GlobalConst;
+
+    typedef [uuid(222621A0-9E4F-44F2-92F6-F827218FF557), version(1.0)]
+    enum {
+        MAX_PATH = 260,
+        FILE_SHARE_READ = 1,
+        FILE_SHARE_WRITE = 2,
+        FILE_SHARE_DELETE = 4,
+        FILE_READ_ATTRIBUTES = 128,
+        OPEN_EXISTING = 3,
+        CREATE_ALWAYS = 2,
+        GENERIC_READ = 0x80000000,
+        GENERIC_WRITE = 0x40000000,
+        FILE_ATTRIBUTE_DIRECTORY = 16,
+        INVALID_HANDLE_VALUE = 0xffffffff,
+        ERROR_SUCCESS = 0,
+        INVALID_FILE_ATTRIBUTES = 0xffffffff,
+        NO_ERROR = 0,
+        FILE_BEGIN = 0,
+        FILE_CURRENT = 1,
+        FILE_END = 2,
+        INVALID_SET_FILE_POINTER = 0xffffffff
+    } REGEXP_File_Const;
+
+    typedef [uuid(AA8CDFA1-A5A7-4001-AC7D-E320378857AD), version(1.0)]
+    struct tagREGEXP_STATE {
+        [helpstring("Global")        
+]
+        VARIANT_BOOL Global;
+        [helpstring("IgnoreCase")        
+]
+        VARIANT_BOOL IgnoreCase;
+        [helpstring("Multiline")        
+]
+        VARIANT_BOOL Multiline;
+        [helpstring("Pattern")        
+]
+        BSTR Pattern;
+        [helpstring("UsePcre")        
+]
+        VARIANT_BOOL UsePcre;
+        [helpstring("Init")        
+]
+        VARIANT_BOOL Init;
+        [helpstring("hLib")        
+]
+        long hLib;
+    } REGEXP_STATE;
+
+    typedef [uuid(AB42C9F7-D64B-44F6-A397-EC17FDE6A99B), version(1.0)]
+    struct tagREGEXP_MATCH {
+        [helpstring("FirstIndex")        
+]
+        long FirstIndex;
+        [helpstring("Length")        
+]
+        long Length;
+        [helpstring("SubMatches")        
+]
+        _IRegExpSubMatches* SubMatches;
+        [helpstring("Value")        
+]
+        BSTR Value;
+    } REGEXP_MATCH;
+};
