@@ -21,6 +21,7 @@ Public Property Get Count() As Long
 End Property
 
 Public Property Get Item(Index As Long) As IRegExpMatch
+Attribute Item.VB_UserMemId = 0
 End Property
 
 Public Function Enumerator() As IEnumVARIANT

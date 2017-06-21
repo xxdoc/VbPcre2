@@ -1,0 +1,12 @@
+1.0 Beta
+Added GUI (Unicode aware)
+Added all using examples in frm-file.
+Applyed all PCRE2 wrapper fixes by jpbro.
+Added .PCRE2 property => for accessing directly to PCRE2 wrapper object model.
+Added missing .FirstIndex property
+Added Wrapper's object model tree in comments of frm-file.
+Cleaned garbage in TLB and maker, hided private methods and some fixes.
+Flag "Alternate Bsux Handling" (ability to use \u, \U, \x in pattern sequences) set to TRUE by default now.
+
+0.9 Alpha
+Initial release

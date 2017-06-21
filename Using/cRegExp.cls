@@ -90,6 +90,7 @@ Private m_Pattern               As String           'IPcre  (Last used regex pat
 Private m_SearchedText          As String           'IPcreMatch
 Private ma_Ovector()            As Long             'IPcreMatch
 Private m_CountMatch            As Long             'IPcreMatch
+Private m_MatchOffset           As Long             'IPcreMatch
 Private mo_Matches              As VBA.Collection   'IPcreMatches
 Private m_AppendedText          As String           'IPcreMatches
 Private m_OptionsCompile        As Long             'IPcreOptionsCompile
@@ -182,8 +183,14 @@ Public Property Let IRegExp_UsePcre(bValue As Boolean)
     End With
 End Property
 
+Public Property Get IRegExp_PCRE2() As IPcre
+    If Not (mo_PCRE2 Is Nothing) Then
+        Set IRegExp_PCRE2 = mo_PCRE2
+    End If
+End Property
+
 Public Property Get IRegExp_Global() As Boolean
-    IRegExp_GlobalSearch = mo_RegexState.Global
+    IRegExp_Global = mo_RegexState.Global
 End Property
 
 Public Property Let IRegExp_Global(bValue As Boolean)
@@ -315,7 +322,7 @@ Public Function IRegExp_Execute(sourceString As String) As IRegExpMatchCollectio
             colSubMatches.Add lo_Match2.SubMatchValue(jj)
         Next
         
-        IRegExp_Execute.Add 0&, lo_Match2.MatchedText, colSubMatches '// TODO: add PCRE2 FirstIndex property realization
+        IRegExp_Execute.Add lo_Match2.FirstIndex, lo_Match2.MatchedText, colSubMatches
     Next
     
 End Function
@@ -525,6 +532,8 @@ Public Function IPcre_Replace(ByVal p_TextToSearch As String, ByVal p_ReplaceWit
    
    'Debug.Print "Subject text: " & p_TextToSearch
    
+   If Len(p_TextToSearch) = 0 Then GoTo NoErrorCleanup
+   
    If Not IPcre_InitRegex(p_RegexToMatch) Then GoTo NoErrorCleanup
 
    l_ReplaceOptionsFlags = IPcre_Options.Replace.OptionFlags
@@ -606,7 +615,7 @@ Public Function IPcre_Test(ByVal p_TextToSearch As String, Optional ByVal p_Rege
 End Function
 
 Public Function IPcre_Execute(ByVal p_TextToSearch As String, Optional ByVal p_RegexToMatch As String) As IPcreMatches
-   ' Return TRUE if any match found
+   ' Returns CPcreMatches object. If MatchCount = 0 then no matches.
    Set IPcre_Execute = Execute2(p_TextToSearch, p_RegexToMatch, False)
 End Function
 
@@ -625,6 +634,8 @@ Private Function Execute2(ByVal p_TextToSearch As String, Optional ByVal p_Regex
    Dim l_Substitute As Boolean
    Dim l_Delta As Long
    Dim ii As Long ' Loop counter
+   Dim l_MatchOffset As Long
+   Dim l_MatchOptions As Long
    
    On Error GoTo ErrorHandler
    
@@ -639,8 +650,10 @@ Private Function Execute2(ByVal p_TextToSearch As String, Optional ByVal p_Regex
       l_GlobalSearch = IPcre_Options.General.GlobalSearch
    End If
    
+   l_MatchOptions = IPcre_Options.Match.OptionFlags   ' Cache match options
+   
    Do
-      l_MatchCount = pcre2_match(m_CompiledRegexHandle, StrPtr(p_TextToSearch), Len(p_TextToSearch), 0, 0, m_MatchDataHandle, m_MatchContextHandle)
+      l_MatchCount = pcre2_match(m_CompiledRegexHandle, StrPtr(p_TextToSearch), Len(p_TextToSearch), 0, l_MatchOptions, m_MatchDataHandle, m_MatchContextHandle)
    
       Select Case l_MatchCount
       Case PCRE2_ERROR_NOMATCH
@@ -665,6 +678,14 @@ Private Function Execute2(ByVal p_TextToSearch As String, Optional ByVal p_Regex
             CopyMemory l_MatchStart, ByVal l_OvectorPtr, 4
             CopyMemory l_MatchLen, ByVal (l_OvectorPtr + 4), 4
             l_MatchLen = l_MatchLen - l_MatchStart
+            
+            If l_MatchLen = 0 Then
+                ' Empty match
+                If Not (IPcre_Options.Match.MatchIfEmpty Or IPcre_Options.Match.MatchIfEmptyAtStart) Then
+                   ' We don't want empty matches, so go to cleanup
+                   GoTo NoErrorCleanup
+                End If
+            End If
             
             l_SearchChunk = Left$(p_TextToSearch, l_MatchStart + l_MatchLen)
             l_MatchText = Mid$(l_SearchChunk, l_MatchStart + 1)
@@ -747,7 +768,9 @@ Private Function Execute2(ByVal p_TextToSearch As String, Optional ByVal p_Regex
             End If
          
          Else
-            Execute2.Add l_SearchChunk, la_Ovector, l_MatchCount
+            Execute2.Add l_SearchChunk, la_Ovector, l_MatchCount, l_MatchOffset
+            
+            l_MatchOffset = l_MatchOffset + l_MatchStart + l_MatchLen
          
             If l_GlobalSearch Then
                p_TextToSearch = Mid$(p_TextToSearch, l_MatchStart + l_MatchLen + 1)
@@ -761,7 +784,7 @@ Private Function Execute2(ByVal p_TextToSearch As String, Optional ByVal p_Regex
          Err.Raise vbObjectError - l_MatchCount, , "PCRE Match Error: " & l_MatchCount
       End Select
       
-   Loop While l_GlobalSearch And (l_MatchCount > 0)
+   Loop While l_GlobalSearch And (l_MatchCount > 0) And (l_MatchLen > 0)
    
 NoErrorCleanup:
    On Error Resume Next
@@ -796,7 +819,7 @@ Cleanup:
    Exit Function
 
 ErrorHandler:
-   Debug.Assert False
+   'Debug.Assert False
    
    l_ErrorNumber = Err.Number
    l_ErrorDesc = Err.Description
@@ -892,6 +915,21 @@ Friend Property Get IPcreMatch_SearchedText() As String
    IPcreMatch_SearchedText = m_SearchedText
 End Property
 
+Public Property Get IPcreMatch_FirstIndex() As Long
+   ' Return the character index of the start of the full match
+   IPcreMatch_FirstIndex = ma_Ovector(0) + m_MatchOffset
+End Property
+
+Public Property Get IPcreMatch_LastIndex() As Long
+   ' Return the character index of the end of the full match
+   IPcreMatch_LastIndex = ma_Ovector(1) + m_MatchOffset
+End Property
+
+Public Property Get IPcreMatch_Length() As Long
+   ' Return the length of the full match
+   IPcreMatch_Length = ma_Ovector(1) - ma_Ovector(0)
+End Property
+
 Public Property Get IPcreMatch_MatchedText() As String
    ' The matched chunk of text in the searched text
    IPcreMatch_MatchedText = IPcreMatch_SubMatchValue(-1)
@@ -904,12 +942,18 @@ Public Property Get IPcreMatch_SubMatchCount() As Long
 End Property
 
 Public Property Get IPcreMatch_SubMatchValue(ByVal p_ZeroBasedSubMatchIndex As Long) As String
+   Dim l_Len As Long
+
    p_ZeroBasedSubMatchIndex = 2 * (p_ZeroBasedSubMatchIndex + 1)
    
-   IPcreMatch_SubMatchValue = Mid$(m_SearchedText, ma_Ovector(p_ZeroBasedSubMatchIndex) + 1, ma_Ovector(p_ZeroBasedSubMatchIndex + 1) - ma_Ovector(p_ZeroBasedSubMatchIndex))
+   l_Len = ma_Ovector(p_ZeroBasedSubMatchIndex + 1) - ma_Ovector(p_ZeroBasedSubMatchIndex)
+ 
+   If l_Len > 0 Then
+      IPcreMatch_SubMatchValue = Mid$(m_SearchedText, ma_Ovector(p_ZeroBasedSubMatchIndex) + 1, l_Len)
+   End If
 End Property
 
-Friend Sub IPcreMatch_Init(ByVal p_SearchedText As String, pa_OvectorArray() As Long, ByVal p_MatchCount As Long)
+Friend Sub IPcreMatch_Init(ByVal p_SearchedText As String, pa_OvectorArray() As Long, ByVal p_MatchCount As Long, ByVal p_MatchOffset As Long)
    If p_MatchCount > 0 Then
       ma_Ovector = pa_OvectorArray
    End If
@@ -917,6 +961,8 @@ Friend Sub IPcreMatch_Init(ByVal p_SearchedText As String, pa_OvectorArray() As 
    m_SearchedText = p_SearchedText
    
    m_CountMatch = p_MatchCount
+   
+   m_MatchOffset = p_MatchOffset
 End Sub
 
 ' ----------------------------------------------------------------------------------------
@@ -959,12 +1005,12 @@ Friend Sub IPcreMatches_AppendText(ByVal p_Text As String)
    m_AppendedText = m_AppendedText & p_Text
 End Sub
 
-Friend Sub IPcreMatches_Add(ByVal p_TextToSearch As String, pa_OvectorArray() As Long, ByVal p_MatchCount As Long)
+Friend Sub IPcreMatches_Add(ByVal p_TextToSearch As String, pa_OvectorArray() As Long, ByVal p_MatchCount As Long, ByVal p_MatchOffset As Long)
    Dim lo_Match As IPcreMatch
    
    Set lo_Match = New cRegExp 'CPcreMatch
    
-   lo_Match.Init p_TextToSearch, pa_OvectorArray, p_MatchCount
+   lo_Match.Init p_TextToSearch, pa_OvectorArray, p_MatchCount, p_MatchOffset
    
    mo_Matches.Add lo_Match
 End Sub
@@ -1031,6 +1077,7 @@ Private Sub IPcreOptionsCompile_InitClass()
    IPcreOptionsCompile_CheckUtfValidity = True
    IPcreOptionsCompile_CaseSensitive = True
    IPcreOptionsCompile_Greedy = True
+   IPcreOptionsCompile_AlternateBsuxHandling = True
 End Sub
 
 Friend Function IPcreOptionsCompile_OptionFlags() As Long
@@ -1058,7 +1105,7 @@ End Property
 
 ' If CASE SENSITIVE option is FALSE, letters in the pattern match both upper and lower case letters in the subject.
 Public Property Get IPcreOptionsCompile_CaseSensitive() As Boolean
-   IPcreOptionsCompile_CaseSensitive = m_OptionsCompile And Not PCRE2_CASELESS
+   IPcreOptionsCompile_CaseSensitive = Not CBool(m_OptionsCompile And PCRE2_CASELESS)
 End Property
 
 Public Property Let IPcreOptionsCompile_CaseSensitive(ByVal p_Enabled As Boolean)
@@ -1144,7 +1191,7 @@ End Property
 ' This option inverts the "greediness" of the quantifiers so that they are not greedy by default,
 ' but become greedy if followed by "?".
 Public Property Get IPcreOptionsCompile_Greedy() As Boolean
-   IPcreOptionsCompile_Greedy = m_OptionsCompile And Not PCRE2_UNGREEDY
+   IPcreOptionsCompile_Greedy = Not CBool(m_OptionsCompile And PCRE2_UNGREEDY)
 End Property
 
 Public Property Let IPcreOptionsCompile_Greedy(ByVal p_Enabled As Boolean)
@@ -1159,7 +1206,7 @@ End Property
 ' When it is set, the effect of passing an invalid UTF string as a pattern is undefined.
 ' It may cause your program to crash or loop. Note that this option can also be passed to pcre2_match() and pcre_dfa_match(), to suppress validity checking of the subject string.
 Public Property Get IPcreOptionsCompile_CheckUtfValidity() As Boolean
-   IPcreOptionsCompile_CheckUtfValidity = m_OptionsCompile And Not PCRE2_NO_UTF_CHECK
+   IPcreOptionsCompile_CheckUtfValidity = Not CBool(m_OptionsCompile And PCRE2_NO_UTF_CHECK)
 End Property
 
 Public Property Let IPcreOptionsCompile_CheckUtfValidity(ByVal p_Enabled As Boolean)
@@ -1308,7 +1355,7 @@ End Property
 
 
 Public Property Get IPcreOptionsMatch_SubjectIsBeginningOfLine() As Boolean
-   IPcreOptionsMatch_SubjectIsBeginningOfLine = m_OptionsMatch And Not PCRE2_NOTBOL
+   IPcreOptionsMatch_SubjectIsBeginningOfLine = Not CBool(m_OptionsMatch And PCRE2_NOTBOL)
 End Property
 
 Public Property Let IPcreOptionsMatch_SubjectIsBeginningOfLine(ByVal p_Enabled As Boolean)
@@ -1316,7 +1363,7 @@ Public Property Let IPcreOptionsMatch_SubjectIsBeginningOfLine(ByVal p_Enabled A
 End Property
 
 Public Property Get IPcreOptionsMatch_SubjectIsEndOfLine() As Boolean
-   IPcreOptionsMatch_SubjectIsEndOfLine = m_OptionsMatch And Not PCRE2_NOTEOL
+   IPcreOptionsMatch_SubjectIsEndOfLine = Not CBool(m_OptionsMatch And PCRE2_NOTEOL)
 End Property
 
 Public Property Let IPcreOptionsMatch_SubjectIsEndOfLine(ByVal p_Enabled As Boolean)
@@ -1324,7 +1371,7 @@ Public Property Let IPcreOptionsMatch_SubjectIsEndOfLine(ByVal p_Enabled As Bool
 End Property
 
 Public Property Get IPcreOptionsMatch_MatchIfEmpty() As Boolean
-   IPcreOptionsMatch_MatchIfEmpty = m_OptionsMatch And Not PCRE2_NOTEMPTY
+   IPcreOptionsMatch_MatchIfEmpty = Not CBool(m_OptionsMatch And PCRE2_NOTEMPTY)
 End Property
 
 Public Property Let IPcreOptionsMatch_MatchIfEmpty(ByVal p_Enabled As Boolean)
@@ -1332,7 +1379,7 @@ Public Property Let IPcreOptionsMatch_MatchIfEmpty(ByVal p_Enabled As Boolean)
 End Property
 
 Public Property Get IPcreOptionsMatch_MatchIfEmptyAtStart() As Boolean
-   IPcreOptionsMatch_MatchIfEmptyAtStart = m_OptionsMatch And Not PCRE2_NOTEMPTY_ATSTART
+   IPcreOptionsMatch_MatchIfEmptyAtStart = Not CBool(m_OptionsMatch And PCRE2_NOTEMPTY_ATSTART)
 End Property
 
 Public Property Let IPcreOptionsMatch_MatchIfEmptyAtStart(ByVal p_Enabled As Boolean)
@@ -1340,7 +1387,7 @@ Public Property Let IPcreOptionsMatch_MatchIfEmptyAtStart(ByVal p_Enabled As Boo
 End Property
 
 Public Property Get IPcreOptionsMatch_PerformUtfCheck() As Boolean
-   IPcreOptionsMatch_PerformUtfCheck = m_OptionsMatch And Not PCRE2_NO_UTF_CHECK
+   IPcreOptionsMatch_PerformUtfCheck = Not CBool(m_OptionsMatch And PCRE2_NO_UTF_CHECK)
 End Property
 
 Public Property Let IPcreOptionsMatch_PerformUtfCheck(ByVal p_Enabled As Boolean)
@@ -1408,7 +1455,7 @@ Public Property Let IPcreOptionsReplace_Anchored(ByVal p_Enabled As Boolean)
 End Property
 
 Public Property Get IPcreOptionsReplace_SubjectIsBeginningOfLine() As Boolean
-   IPcreOptionsReplace_SubjectIsBeginningOfLine = m_OptionsReplace And Not PCRE2_NOTBOL
+   IPcreOptionsReplace_SubjectIsBeginningOfLine = Not CBool(m_OptionsReplace And PCRE2_NOTBOL)
 End Property
 
 Public Property Let IPcreOptionsReplace_SubjectIsBeginningOfLine(ByVal p_Enabled As Boolean)
@@ -1416,7 +1463,7 @@ Public Property Let IPcreOptionsReplace_SubjectIsBeginningOfLine(ByVal p_Enabled
 End Property
 
 Public Property Get IPcreOptionsReplace_SubjectIsEndOfLine() As Boolean
-   IPcreOptionsReplace_SubjectIsEndOfLine = m_OptionsReplace And Not PCRE2_NOTEOL
+   IPcreOptionsReplace_SubjectIsEndOfLine = Not CBool(m_OptionsReplace And PCRE2_NOTEOL)
 End Property
 
 Public Property Let IPcreOptionsReplace_SubjectIsEndOfLine(ByVal p_Enabled As Boolean)
@@ -1424,7 +1471,7 @@ Public Property Let IPcreOptionsReplace_SubjectIsEndOfLine(ByVal p_Enabled As Bo
 End Property
 
 Public Property Get IPcreOptionsReplace_MatchIfEmpty() As Boolean
-   IPcreOptionsReplace_MatchIfEmpty = m_OptionsReplace And Not PCRE2_NOTEMPTY
+   IPcreOptionsReplace_MatchIfEmpty = Not CBool(m_OptionsReplace And PCRE2_NOTEMPTY)
 End Property
 
 Public Property Let IPcreOptionsReplace_MatchIfEmpty(ByVal p_Enabled As Boolean)
@@ -1432,7 +1479,7 @@ Public Property Let IPcreOptionsReplace_MatchIfEmpty(ByVal p_Enabled As Boolean)
 End Property
 
 Public Property Get IPcreOptionsReplace_MatchIfEmptyAtStart() As Boolean
-   IPcreOptionsReplace_MatchIfEmptyAtStart = m_OptionsReplace And Not PCRE2_NOTEMPTY_ATSTART
+   IPcreOptionsReplace_MatchIfEmptyAtStart = Not CBool(m_OptionsReplace And PCRE2_NOTEMPTY_ATSTART)
 End Property
 
 Public Property Let IPcreOptionsReplace_MatchIfEmptyAtStart(ByVal p_Enabled As Boolean)
@@ -1440,7 +1487,7 @@ Public Property Let IPcreOptionsReplace_MatchIfEmptyAtStart(ByVal p_Enabled As B
 End Property
 
 Public Property Get IPcreOptionsReplace_PerformUtfCheck() As Boolean
-   IPcreOptionsReplace_PerformUtfCheck = m_OptionsReplace And Not PCRE2_NO_UTF_CHECK
+   IPcreOptionsReplace_PerformUtfCheck = Not CBool(m_OptionsReplace And PCRE2_NO_UTF_CHECK)
 End Property
 
 Public Property Let IPcreOptionsReplace_PerformUtfCheck(ByVal p_Enabled As Boolean)
@@ -1453,7 +1500,7 @@ End Property
 ' group name or  number  no  longer  causes  the  PCRE2_ERROR_NOSUBSTRING
 ' error.
 Public Property Get IPcreOptionsReplace_ErrorOnUnknownCapturingGroups() As Boolean
-   IPcreOptionsReplace_ErrorOnUnknownCapturingGroups = m_OptionsReplace And Not PCRE2_SUBSTITUTE_UNKNOWN_UNSET
+   IPcreOptionsReplace_ErrorOnUnknownCapturingGroups = Not CBool(m_OptionsReplace And PCRE2_SUBSTITUTE_UNKNOWN_UNSET)
 End Property
 
 Public Property Let IPcreOptionsReplace_ErrorOnUnknownCapturingGroups(ByVal p_Enabled As Boolean)

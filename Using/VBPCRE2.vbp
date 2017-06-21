@@ -1,6 +1,7 @@
 Type=Exe
 Reference=*\G{00020430-0000-0000-C000-000000000046}#2.0#0#C:\Windows\SysWOW64\stdole2.tlb#OLE Automation
-Reference=*\G{53993F61-68A8-440F-A000-911D5AD9776F}#1.0#0#IRegexp.tlb#Regexp_Interface
+Reference=*\G{52765980-7DA5-49A7-8615-2367695B4B1F}#1.0#0#IRegexp.tlb#Regexp_Interface
+Object={3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0; Richtx32.ocx
 Form=Form1.frm
 Class=cRegExp; cRegExp.cls
 IconForm="Form1"
@@ -14,7 +15,7 @@ HelpContextID="0"
 CompatibleMode="0"
 MajorVer=1
 MinorVer=0
-RevisionVer=10
+RevisionVer=18
 AutoIncrementVer=1
 ServerSupportFiles=0
 VersionComments="Programmed by Jason Peter Brown"

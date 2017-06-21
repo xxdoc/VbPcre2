@@ -1,6 +1,6 @@
 Type=OleDll
 Reference=*\G{00020430-0000-0000-C000-000000000046}#2.0#0#C:\Windows\SysWOW64\stdole2.tlb#OLE Automation
-Class=cRegExp; cRegExp.cls
+Class=cGlobals; cGlobals.cls
 Class=IRegExpMatch; IRegExpMatch.cls
 Class=IRegExpMatchCollection; IRegExpMatchCollection.cls
 Class=IRegExpSubMatches; IRegExpSubMatches.cls

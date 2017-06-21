@@ -13,12 +13,12 @@ Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = True
 Option Explicit
 
-Public Event Matched(ByRef p_MatchedText As String, ByRef p_SubstitutionAction As e_SubstitutionAction, ByRef p_Cancel As Boolean)
-
 Public Sub InitClass()
+Attribute InitClass.VB_MemberFlags = "40"
 End Sub
 
 Public Sub TerminateClass()
+Attribute TerminateClass.VB_MemberFlags = "40"
 End Sub
 
 Public Function Options() As IPcreOptions
@@ -50,4 +50,3 @@ End Property
 
 Public Property Let Pattern(ByVal p_RegexPattern As String)
 End Property
-

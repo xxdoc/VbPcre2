@@ -34,5 +34,5 @@ End Property
 Public Sub AppendText(ByVal p_Text As String)
 End Sub
 
-Public Sub Add(ByVal p_TextToSearch As String, pa_OvectorArray() As Long, ByVal p_MatchCount As Long)
+Public Sub Add(ByVal p_TextToSearch As String, pa_OvectorArray() As Long, ByVal p_MatchCount As Long, ByVal p_MatchOffset As Long)
 End Sub

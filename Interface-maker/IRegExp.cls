@@ -52,4 +52,6 @@ End Function
 Public Function Execute(sourceString As String) As IRegExpMatchCollection
 End Function
 
+Public Property Get PCRE2() As IPcre
+End Property
 

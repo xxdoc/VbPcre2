@@ -1,9 +1,5 @@
-// Generated .IDL file (by the OLE/COM Object Viewer)
-// 
-// typelib filename: <could not determine filename>
-
 [
-  uuid(53993F61-68A8-440F-A000-911D5AD9776F),
+  uuid(934F101B-01C6-4623-A8FA-85CA9AC0EB02),
   version(1.0),
   custom(50867B00-BB69-11D0-A8FF-00A0C9110059, 9782)
 
@@ -14,7 +10,7 @@ library Regexp_Interface
     importlib("stdole2.tlb");
 
     // Forward declare all types defined in this typelib
-    interface _cRegExp;
+    interface _cGlobals;
     interface _IRegExpMatch;
     interface _IRegExpMatchCollection;
     interface _IRegExpSubMatches;
@@ -27,294 +23,31 @@ library Regexp_Interface
     interface _IPcreOptionsGeneral;
     interface _IPcreOptionsMatch;
     interface _IPcreOptionsReplace;
-    dispinterface __cRegExp;
-    dispinterface __IPcre;
-
-    typedef [uuid(2604DD32-114D-42A9-9B52-D8D07A671E4B), version(1.0)]
-    enum {
-        subaction_None = 0,
-        subaction_Replace = 1,
-        subaction_ReplaceAndCache = 2
-    } e_SubstitutionAction;
 
     [
       odl,
-      uuid(191B3A03-79E6-48C9-85AF-3DA0DD6D1152),
+      uuid(79879BA6-3218-46EA-A244-10C1EF32ACC8),
       version(1.0),
       hidden,
       dual,
       nonextensible,
       oleautomation
     ]
-    interface _cRegExp : IDispatch {
-        [id(0x68030036), propget]
-        HRESULT IRegExp_UsePcre([out, retval] VARIANT_BOOL* );
-        [id(0x68030036), propput]
-        HRESULT IRegExp_UsePcre([in, out] VARIANT_BOOL* );
-        [id(0x68030035), propget]
-        HRESULT IRegExp_GlobalSearch([out, retval] VARIANT_BOOL* );
-        [id(0x68030035), propput]
-        HRESULT IRegExp_GlobalSearch([in, out] VARIANT_BOOL* );
-        [id(0x68030034), propget]
-        HRESULT IRegExp_IgnoreCase([out, retval] VARIANT_BOOL* );
-        [id(0x68030034), propput]
-        HRESULT IRegExp_IgnoreCase([in, out] VARIANT_BOOL* );
-        [id(0x68030033), propget]
-        HRESULT IRegExp_Multiline([out, retval] VARIANT_BOOL* );
-        [id(0x68030033), propput]
-        HRESULT IRegExp_Multiline([in, out] VARIANT_BOOL* );
-        [id(0x68030032), propget]
-        HRESULT IRegExp_Pattern([out, retval] BSTR* );
-        [id(0x68030032), propput]
-        HRESULT IRegExp_Pattern([in, out] BSTR* );
-        [id(0x6003003a)]
-        HRESULT IRegExp_Replace(
-                        [in, out] BSTR* sourceString, 
-                        [in, out] VARIANT* replaceVar, 
-                        [out, retval] BSTR* );
-        [id(0x6003003b)]
-        HRESULT IRegExp_Test(
-                        [in, out] BSTR* sourceString, 
-                        [out, retval] VARIANT_BOOL* );
-        [id(0x6003003c)]
-        HRESULT IRegExp_Execute(
-                        [in, out] BSTR* sourceString, 
-                        [out, retval] _IRegExpMatchCollection** );
-        [id(0x68030031), propget]
-        HRESULT IRegExpMatch_FirstIndex([out, retval] long* );
-        [id(0x68030030), propget]
-        HRESULT IRegExpMatch_Length([out, retval] long* );
-        [id(0x6803002f), propget]
-        HRESULT IRegExpMatch_SubMatches([out, retval] _IRegExpSubMatches** );
-        [id(0x6803002e), propget]
-        HRESULT IRegExpMatch_Value([out, retval] BSTR* );
-        [id(0x6803002d), propget]
-        HRESULT IRegExpMatchCollection_Count([out, retval] long* );
-        [id(0x6803002c), propget]
-        HRESULT IRegExpMatchCollection_Item(
-                        [in, out] long* Index, 
-                        [out, retval] _IRegExpMatch** );
-        [id(0x6003003e)]
-        HRESULT IRegExpMatchCollection_Enumerator([out, retval] IEnumVARIANT** );
-        [id(0x6803002b), propget]
-        HRESULT IRegExpSubMatches_Count([out, retval] long* );
-        [id(0x6803002a), propget]
-        HRESULT IRegExpSubMatches_Item(
-                        [in, out] long* Index, 
-                        [out, retval] BSTR* );
-        [id(0x60030041)]
-        HRESULT IRegExpSubMatches_Enumerator([out, retval] IEnumVARIANT** );
-        [id(0x60030044)]
-        HRESULT IPcre_Options([out, retval] _IPcreOptions** );
-        [id(0x60030048)]
-        HRESULT IPcre_Replace(
-                        [in] BSTR p_TextToSearch, 
-                        [in] BSTR p_ReplaceWithText, 
-                        [in, optional] BSTR p_RegexToMatch, 
-                        [out, retval] BSTR* );
-        [id(0x60030049)]
-        HRESULT IPcre_Test(
-                        [in] BSTR p_TextToSearch, 
-                        [in, optional] BSTR p_RegexToMatch, 
-                        [out, retval] VARIANT_BOOL* );
-        [id(0x6003004a)]
-        HRESULT IPcre_Execute(
-                        [in] BSTR p_TextToSearch, 
-                        [in, optional] BSTR p_RegexToMatch, 
-                        [out, retval] _IPcreMatches** );
-        [id(0x68030029), propput]
-        HRESULT IPcre_GlobalSearch([in] VARIANT_BOOL );
-        [id(0x68030029), propget]
-        HRESULT IPcre_GlobalSearch([out, retval] VARIANT_BOOL* );
-        [id(0x68030028), propput]
-        HRESULT IPcre_IgnoreCase([in] VARIANT_BOOL );
-        [id(0x68030028), propget]
-        HRESULT IPcre_IgnoreCase([out, retval] VARIANT_BOOL* );
-        [id(0x68030027), propget]
-        HRESULT IPcre_Pattern([out, retval] BSTR* );
-        [id(0x68030027), propput]
-        HRESULT IPcre_Pattern([in] BSTR );
-        [id(0x68030025), propget]
-        HRESULT IPcreMatch_MatchedText([out, retval] BSTR* );
-        [id(0x68030024), propget]
-        HRESULT IPcreMatch_SubMatchCount([out, retval] long* );
-        [id(0x68030023), propget]
-        HRESULT IPcreMatch_SubMatchValue(
-                        [in] long p_ZeroBasedSubMatchIndex, 
-                        [out, retval] BSTR* );
-        [id(0x68030022), propget]
-        HRESULT IPcreMatches_Count([out, retval] long* );
-        [id(0x68030021), propget]
-        HRESULT IPcreMatches_Item(
-                        [in] long p_ZeroBasedIndex, 
-                        [out, retval] _IPcreMatch** );
-        [id(0xfffffffc), hidden]
-        HRESULT IPcreMatches_Enumerator([out, retval] IEnumVARIANT** );
-        [id(0x68030020), propget]
-        HRESULT IPcreMatches_Text([out, retval] BSTR* );
-        [id(0x60030053)]
-        HRESULT IPcreOptions_Compile([out, retval] _IPcreOptionsCompile** );
-        [id(0x60030054)]
-        HRESULT IPcreOptions_General([out, retval] _IPcreOptionsGeneral** );
-        [id(0x60030055)]
-        HRESULT IPcreOptions_Match([out, retval] _IPcreOptionsMatch** );
-        [id(0x60030056)]
-        HRESULT IPcreOptions_Replace([out, retval] _IPcreOptionsReplace** );
-        [id(0x6803001f), propget]
-        HRESULT IPcreOptionsCompile_AllowDuplicateSubpatternNames([out, retval] VARIANT_BOOL* );
-        [id(0x6803001f), propput]
-        HRESULT IPcreOptionsCompile_AllowDuplicateSubpatternNames([in] VARIANT_BOOL );
-        [id(0x6803001e), propget]
-        HRESULT IPcreOptionsCompile_CaseSensitive([out, retval] VARIANT_BOOL* );
-        [id(0x6803001e), propput]
-        HRESULT IPcreOptionsCompile_CaseSensitive([in] VARIANT_BOOL );
-        [id(0x6803001d), propget]
-        HRESULT IPcreOptionsCompile_Anchored([out, retval] VARIANT_BOOL* );
-        [id(0x6803001d), propput]
-        HRESULT IPcreOptionsCompile_Anchored([in] VARIANT_BOOL );
-        [id(0x6803001c), propget]
-        HRESULT IPcreOptionsCompile_AutomaticallyInsertCallouts([out, retval] VARIANT_BOOL* );
-        [id(0x6803001c), propput]
-        HRESULT IPcreOptionsCompile_AutomaticallyInsertCallouts([in] VARIANT_BOOL );
-        [id(0x6803001b), propget]
-        HRESULT IPcreOptionsCompile_IgnorePatternWhitspaceAndComments([out, retval] VARIANT_BOOL* );
-        [id(0x6803001b), propput]
-        HRESULT IPcreOptionsCompile_IgnorePatternWhitspaceAndComments([in] VARIANT_BOOL );
-        [id(0x6803001a), propget]
-        HRESULT IPcreOptionsCompile_DotMatchesAllCharacters([out, retval] VARIANT_BOOL* );
-        [id(0x6803001a), propput]
-        HRESULT IPcreOptionsCompile_DotMatchesAllCharacters([in] VARIANT_BOOL );
-        [id(0x68030019), propget]
-        HRESULT IPcreOptionsCompile_Greedy([out, retval] VARIANT_BOOL* );
-        [id(0x68030019), propput]
-        HRESULT IPcreOptionsCompile_Greedy([in] VARIANT_BOOL );
-        [id(0x68030018), propget]
-        HRESULT IPcreOptionsCompile_CheckUtfValidity([out, retval] VARIANT_BOOL* );
-        [id(0x68030018), propput]
-        HRESULT IPcreOptionsCompile_CheckUtfValidity([in] VARIANT_BOOL );
-        [id(0x68030017), propget]
-        HRESULT IPcreOptionsCompile_Multiline([out, retval] VARIANT_BOOL* );
-        [id(0x68030017), propput]
-        HRESULT IPcreOptionsCompile_Multiline([in] VARIANT_BOOL );
-        [id(0x68030016), propget]
-        HRESULT IPcreOptionsCompile_AllowEmptyClass([out, retval] VARIANT_BOOL* );
-        [id(0x68030016), propput]
-        HRESULT IPcreOptionsCompile_AllowEmptyClass([in] VARIANT_BOOL );
-        [id(0x68030015), propget]
-        HRESULT IPcreOptionsCompile_AlternateBsuxHandling([out, retval] VARIANT_BOOL* );
-        [id(0x68030015), propput]
-        HRESULT IPcreOptionsCompile_AlternateBsuxHandling([in] VARIANT_BOOL );
-        [id(0x68030014), propget]
-        HRESULT IPcreOptionsCompile_DollarMatchesEndOfStringOnly([out, retval] VARIANT_BOOL* );
-        [id(0x68030014), propput]
-        HRESULT IPcreOptionsCompile_DollarMatchesEndOfStringOnly([in] VARIANT_BOOL );
-        [id(0x68030013), propget]
-        HRESULT IPcreOptionsCompile_Utf([out, retval] VARIANT_BOOL* );
-        [id(0x68030013), propput]
-        HRESULT IPcreOptionsCompile_Utf([in] VARIANT_BOOL );
-        [id(0x68030012), propget]
-        HRESULT IPcreOptionsCompile_AlternateCircumflexHandling([out, retval] VARIANT_BOOL* );
-        [id(0x68030012), propput]
-        HRESULT IPcreOptionsCompile_AlternateCircumflexHandling([in] VARIANT_BOOL );
-        [id(0x68030011), propget]
-        HRESULT IPcreOptionsGeneral_GlobalSearch([out, retval] VARIANT_BOOL* );
-        [id(0x68030011), propput]
-        HRESULT IPcreOptionsGeneral_GlobalSearch([in] VARIANT_BOOL );
-        [id(0x68030010), propget]
-        HRESULT IPcreOptionsMatch_Anchored([out, retval] VARIANT_BOOL* );
-        [id(0x68030010), propput]
-        HRESULT IPcreOptionsMatch_Anchored([in] VARIANT_BOOL );
-        [id(0x6803000f), propget]
-        HRESULT IPcreOptionsMatch_SubjectIsBeginningOfLine([out, retval] VARIANT_BOOL* );
-        [id(0x6803000f), propput]
-        HRESULT IPcreOptionsMatch_SubjectIsBeginningOfLine([in] VARIANT_BOOL );
-        [id(0x6803000e), propget]
-        HRESULT IPcreOptionsMatch_SubjectIsEndOfLine([out, retval] VARIANT_BOOL* );
-        [id(0x6803000e), propput]
-        HRESULT IPcreOptionsMatch_SubjectIsEndOfLine([in] VARIANT_BOOL );
-        [id(0x6803000d), propget]
-        HRESULT IPcreOptionsMatch_MatchIfEmpty([out, retval] VARIANT_BOOL* );
-        [id(0x6803000d), propput]
-        HRESULT IPcreOptionsMatch_MatchIfEmpty([in] VARIANT_BOOL );
-        [id(0x6803000c), propget]
-        HRESULT IPcreOptionsMatch_MatchIfEmptyAtStart([out, retval] VARIANT_BOOL* );
-        [id(0x6803000c), propput]
-        HRESULT IPcreOptionsMatch_MatchIfEmptyAtStart([in] VARIANT_BOOL );
-        [id(0x6803000b), propget]
-        HRESULT IPcreOptionsMatch_PerformUtfCheck([out, retval] VARIANT_BOOL* );
-        [id(0x6803000b), propput]
-        HRESULT IPcreOptionsMatch_PerformUtfCheck([in] VARIANT_BOOL );
-        [id(0x6803000a), propget]
-        HRESULT IPcreOptionsMatch_MatchedEventEnabled([out, retval] VARIANT_BOOL* );
-        [id(0x6803000a), propput]
-        HRESULT IPcreOptionsMatch_MatchedEventEnabled([in] VARIANT_BOOL );
-        [id(0x68030009), propget]
-        HRESULT IPcreOptionsMatch_MatchedEventSubstitutionCacheSize([out, retval] long* );
-        [id(0x68030009), propput]
-        HRESULT IPcreOptionsMatch_MatchedEventSubstitutionCacheSize([in] long );
-        [id(0x68030008), propget]
-        HRESULT IPcreOptionsReplace_Anchored([out, retval] VARIANT_BOOL* );
-        [id(0x68030008), propput]
-        HRESULT IPcreOptionsReplace_Anchored([in] VARIANT_BOOL );
-        [id(0x68030007), propget]
-        HRESULT IPcreOptionsReplace_SubjectIsBeginningOfLine([out, retval] VARIANT_BOOL* );
-        [id(0x68030007), propput]
-        HRESULT IPcreOptionsReplace_SubjectIsBeginningOfLine([in] VARIANT_BOOL );
-        [id(0x68030006), propget]
-        HRESULT IPcreOptionsReplace_SubjectIsEndOfLine([out, retval] VARIANT_BOOL* );
-        [id(0x68030006), propput]
-        HRESULT IPcreOptionsReplace_SubjectIsEndOfLine([in] VARIANT_BOOL );
-        [id(0x68030005), propget]
-        HRESULT IPcreOptionsReplace_MatchIfEmpty([out, retval] VARIANT_BOOL* );
-        [id(0x68030005), propput]
-        HRESULT IPcreOptionsReplace_MatchIfEmpty([in] VARIANT_BOOL );
-        [id(0x68030004), propget]
-        HRESULT IPcreOptionsReplace_MatchIfEmptyAtStart([out, retval] VARIANT_BOOL* );
-        [id(0x68030004), propput]
-        HRESULT IPcreOptionsReplace_MatchIfEmptyAtStart([in] VARIANT_BOOL );
-        [id(0x68030003), propget]
-        HRESULT IPcreOptionsReplace_PerformUtfCheck([out, retval] VARIANT_BOOL* );
-        [id(0x68030003), propput]
-        HRESULT IPcreOptionsReplace_PerformUtfCheck([in] VARIANT_BOOL );
-        [id(0x68030002), propget]
-        HRESULT IPcreOptionsReplace_ErrorOnUnknownCapturingGroups([out, retval] VARIANT_BOOL* );
-        [id(0x68030002), propput]
-        HRESULT IPcreOptionsReplace_ErrorOnUnknownCapturingGroups([in] VARIANT_BOOL );
-        [id(0x68030001), propget]
-        HRESULT IPcreOptionsReplace_TreatUnknownCapturingGroupsAsEmptyStrings([out, retval] VARIANT_BOOL* );
-        [id(0x68030001), propput]
-        HRESULT IPcreOptionsReplace_TreatUnknownCapturingGroupsAsEmptyStrings([in] VARIANT_BOOL );
-        [id(0x68030000), propget]
-        HRESULT IPcreOptionsReplace_ExtendedReplacement([out, retval] VARIANT_BOOL* );
-        [id(0x68030000), propput]
-        HRESULT IPcreOptionsReplace_ExtendedReplacement([in] VARIANT_BOOL );
+    interface _cGlobals : IDispatch {
     };
 
     [
-      uuid(D3230116-B9D7-4B4D-A420-DB7D8D4547C7),
+      uuid(4B329B09-4FD2-4409-B9A9-A695AB6A5620),
       version(1.0),
       appobject
     ]
-    coclass cRegExp {
-        [default] interface _cRegExp;
-        interface _IRegExpMatch;
-        interface _IRegExpMatchCollection;
-        interface _IRegExpSubMatches;
-        interface _IRegExp;
-        interface _IPcre;
-        interface _IPcreMatch;
-        interface _IPcreMatches;
-        interface _IPcreOptions;
-        interface _IPcreOptionsGeneral;
-        interface _IPcreOptionsMatch;
-        interface _IPcreOptionsReplace;
-        interface _IPcreOptionsCompile;
-        [default, source] dispinterface __cRegExp;
+    coclass cGlobals {
+        [default] interface _cGlobals;
     };
 
     [
       odl,
-      uuid(1AD499AD-2541-48CC-B73A-CAE1200E8B92),
+      uuid(29EBC703-3DE9-4742-B7B7-FC1DE8327BA7),
       version(1.0),
       hidden,
       dual,
@@ -338,7 +71,7 @@ library Regexp_Interface
     };
 
     [
-      uuid(CE2CFA24-D31C-425F-8637-165F701A343F),
+      uuid(0ECEC104-D22F-4720-8AF0-D13E3A3B24E6),
       version(1.0),
       noncreatable
     ]
@@ -348,7 +81,7 @@ library Regexp_Interface
 
     [
       odl,
-      uuid(8F67E028-A0B2-4D44-B80A-0C54AF4D8E82),
+      uuid(3CC9A8AC-10E7-479C-BDB2-AE8C5CC6795C),
       version(1.0),
       hidden,
       dual,
@@ -360,7 +93,7 @@ library Regexp_Interface
         HRESULT InitClass();
         [id(0x68030001), propget]
         HRESULT Count([out, retval] long* );
-        [id(0x68030000), propget]
+        [id(00000000), propget]
         HRESULT Item(
                         [in, out] long* Index, 
                         [out, retval] _IRegExpMatch** );
@@ -374,7 +107,7 @@ library Regexp_Interface
     };
 
     [
-      uuid(6562B2E3-E479-49C5-9A83-331D9A050298),
+      uuid(E1DECC7D-6F34-43FD-9F52-FC9D785CDAF7),
       version(1.0),
       noncreatable
     ]
@@ -384,7 +117,7 @@ library Regexp_Interface
 
     [
       odl,
-      uuid(173B2400-48FA-4BE5-A9E7-518DAB7EA206),
+      uuid(8D64F7A0-93B4-4206-A131-C26FE239E2F2),
       version(1.0),
       hidden,
       dual,
@@ -407,7 +140,7 @@ library Regexp_Interface
     };
 
     [
-      uuid(7B0563F0-FFC8-4632-A954-504765BCC924),
+      uuid(DABEF2C8-2E0A-4750-9DDD-103331D943D4),
       version(1.0),
       noncreatable
     ]
@@ -417,7 +150,7 @@ library Regexp_Interface
 
     [
       odl,
-      uuid(6EA8F0FF-6951-43DF-9912-AA14D7A2B59F),
+      uuid(AEAEF080-B901-41C3-8D19-6ABBCAC4A721),
       version(1.0),
       hidden,
       dual,
@@ -425,43 +158,45 @@ library Regexp_Interface
       oleautomation
     ]
     interface _IRegExp : IDispatch {
-        [id(0x68030004), propget]
+        [id(0x68030005), propget]
         HRESULT UsePcre([out, retval] VARIANT_BOOL* );
-        [id(0x68030004), propput]
+        [id(0x68030005), propput]
         HRESULT UsePcre([in, out] VARIANT_BOOL* );
-        [id(0x68030003), propget]
+        [id(0x68030004), propget]
         HRESULT Global([out, retval] VARIANT_BOOL* );
-        [id(0x68030003), propput]
+        [id(0x68030004), propput]
         HRESULT Global([in, out] VARIANT_BOOL* );
-        [id(0x68030002), propget]
+        [id(0x68030003), propget]
         HRESULT IgnoreCase([out, retval] VARIANT_BOOL* );
-        [id(0x68030002), propput]
+        [id(0x68030003), propput]
         HRESULT IgnoreCase([in, out] VARIANT_BOOL* );
-        [id(0x68030001), propget]
+        [id(0x68030002), propget]
         HRESULT Multiline([out, retval] VARIANT_BOOL* );
-        [id(0x68030001), propput]
+        [id(0x68030002), propput]
         HRESULT Multiline([in, out] VARIANT_BOOL* );
-        [id(0x68030000), propget]
+        [id(0x68030001), propget]
         HRESULT Pattern([out, retval] BSTR* );
-        [id(0x68030000), propput]
+        [id(0x68030001), propput]
         HRESULT Pattern([in, out] BSTR* );
-        [id(0x60030005)]
+        [id(0x60030006)]
         HRESULT Replace(
                         [in, out] BSTR* sourceString, 
                         [in, out] VARIANT* replaceVar, 
                         [out, retval] BSTR* );
-        [id(0x60030006)]
+        [id(0x60030007)]
         HRESULT Test(
                         [in, out] BSTR* sourceString, 
                         [out, retval] VARIANT_BOOL* );
-        [id(0x60030007)]
+        [id(0x60030008)]
         HRESULT Execute(
                         [in, out] BSTR* sourceString, 
                         [out, retval] _IRegExpMatchCollection** );
+        [id(0x68030000), propget]
+        HRESULT PCRE2([out, retval] _IPcre** );
     };
 
     [
-      uuid(C5211BD6-E817-495C-8CD6-8C21EF91306D),
+      uuid(83EFD981-25A8-4974-A214-BCF26022774C),
       version(1.0),
       appobject
     ]
@@ -471,7 +206,7 @@ library Regexp_Interface
 
     [
       odl,
-      uuid(92D6C823-DD0C-4936-8E19-A179AE3DB332),
+      uuid(A4F0158E-32C7-498E-85A2-CAB3A236187A),
       version(1.0),
       hidden,
       dual,
@@ -479,9 +214,9 @@ library Regexp_Interface
       oleautomation
     ]
     interface _IPcre : IDispatch {
-        [id(0x60030003)]
+        [id(0x60030003), hidden]
         HRESULT InitClass();
-        [id(0x60030004)]
+        [id(0x60030004), hidden]
         HRESULT TerminateClass();
         [id(0x60030005)]
         HRESULT Options([out, retval] _IPcreOptions** );
@@ -516,18 +251,17 @@ library Regexp_Interface
     };
 
     [
-      uuid(83FFA119-4E48-4285-89B5-F7B6C21E7CA9),
+      uuid(AE489F4B-1800-4B33-A049-FED3CE21A583),
       version(1.0),
       noncreatable
     ]
     coclass IPcre {
         [default] interface _IPcre;
-        [default, source] dispinterface __IPcre;
     };
 
     [
       odl,
-      uuid(E55F55A3-DCA0-405C-A99A-201BFF303F46),
+      uuid(1EA5B66C-FC51-4435-98FE-1F6B5DDF71C2),
       version(1.0),
       hidden,
       dual,
@@ -535,25 +269,32 @@ library Regexp_Interface
       oleautomation
     ]
     interface _IPcreMatch : IDispatch {
-        [id(0x68030003), propget]
+        [id(0x68030006), propget]
         HRESULT SearchedText([out, retval] BSTR* );
-        [id(0x68030002), propget]
+        [id(0x68030005), propget]
         HRESULT MatchedText([out, retval] BSTR* );
+        [id(0x68030004), propget]
+        HRESULT FirstIndex([out, retval] long* );
+        [id(0x68030003), propget]
+        HRESULT LastIndex([out, retval] long* );
+        [id(0x68030002), propget]
+        HRESULT Length([out, retval] long* );
         [id(0x68030001), propget]
         HRESULT SubMatchCount([out, retval] long* );
         [id(0x68030000), propget]
         HRESULT SubMatchValue(
                         [in] long p_ZeroBasedSubMatchIndex, 
                         [out, retval] BSTR* );
-        [id(0x60030004)]
+        [id(0x60030007)]
         HRESULT Init(
                         [in] BSTR p_SearchedText, 
                         [in, out] SAFEARRAY(long)* pa_OvectorArray, 
-                        [in] long p_MatchCount);
+                        [in] long p_MatchCount, 
+                        [in] long p_MatchOffset);
     };
 
     [
-      uuid(BAC5EBDB-75C6-436E-9916-B5441C61F5B7),
+      uuid(0E365C3A-54D4-4861-A1AB-49771A7ECBDF),
       version(1.0),
       noncreatable
     ]
@@ -563,7 +304,7 @@ library Regexp_Interface
 
     [
       odl,
-      uuid(4C369EA8-42A8-4989-B08F-3078A39E5280),
+      uuid(0AE94A0E-ABF0-4791-88AC-8FD7D1E1B5EF),
       version(1.0),
       hidden,
       dual,
@@ -589,11 +330,12 @@ library Regexp_Interface
         HRESULT Add(
                         [in] BSTR p_TextToSearch, 
                         [in, out] SAFEARRAY(long)* pa_OvectorArray, 
-                        [in] long p_MatchCount);
+                        [in] long p_MatchCount, 
+                        [in] long p_MatchOffset);
     };
 
     [
-      uuid(D467A140-8DAC-49A4-AF11-834E6679B18F),
+      uuid(F791DC2A-4E28-4664-AA92-93B808830C87),
       version(1.0),
       noncreatable
     ]
@@ -603,7 +345,7 @@ library Regexp_Interface
 
     [
       odl,
-      uuid(84766DD4-706F-4788-9753-E1F70195C2EB),
+      uuid(3BA2EE95-5CB3-49AB-A54D-C1232ECAEE39),
       version(1.0),
       hidden,
       dual,
@@ -622,7 +364,7 @@ library Regexp_Interface
     };
 
     [
-      uuid(F5A6BC40-2650-4DF5-A692-5B484EC30A43),
+      uuid(5869FDDC-0461-4BA9-B0F2-07CBD79D07D5),
       version(1.0),
       noncreatable
     ]
@@ -632,7 +374,7 @@ library Regexp_Interface
 
     [
       odl,
-      uuid(83CAC5CF-382D-4EE7-AF5C-B40F3E45BBFF),
+      uuid(9B3B0678-74AE-4968-92FD-97829A1EB60F),
       version(1.0),
       hidden,
       dual,
@@ -640,9 +382,9 @@ library Regexp_Interface
       oleautomation
     ]
     interface _IPcreOptionsCompile : IDispatch {
-        [id(0x6003000e)]
+        [id(0x6003000e), hidden]
         HRESULT InitClass();
-        [id(0x6003000f)]
+        [id(0x6003000f), hidden]
         HRESULT OptionFlags([out, retval] long* );
         [id(0x6803000d), propget]
         HRESULT AllowDuplicateSubpatternNames([out, retval] VARIANT_BOOL* );
@@ -703,7 +445,7 @@ library Regexp_Interface
     };
 
     [
-      uuid(8963B3DF-E1BC-4D26-8A68-E9FA4C7007F0),
+      uuid(29DAC492-3CCE-4974-A50F-CD1E6DE64F18),
       version(1.0),
       noncreatable
     ]
@@ -713,7 +455,7 @@ library Regexp_Interface
 
     [
       odl,
-      uuid(EEFF2C6D-2DB9-4548-B97A-F6A15749EABF),
+      uuid(761B28A5-45BA-4B95-A8CB-7AB2986D1AE5),
       version(1.0),
       hidden,
       dual,
@@ -728,7 +470,7 @@ library Regexp_Interface
     };
 
     [
-      uuid(0746DF9C-BC47-48EA-986B-5520C0D99D4D),
+      uuid(31F27278-32F5-4C09-ABA3-C771D51502B1),
       version(1.0),
       noncreatable
     ]
@@ -738,7 +480,7 @@ library Regexp_Interface
 
     [
       odl,
-      uuid(B52A899C-5C75-4DEE-9E25-A1AC34D58DB3),
+      uuid(85C096E6-BE2F-470F-900A-924B26489A6E),
       version(1.0),
       hidden,
       dual,
@@ -746,9 +488,9 @@ library Regexp_Interface
       oleautomation
     ]
     interface _IPcreOptionsMatch : IDispatch {
-        [id(0x60030008)]
+        [id(0x60030008), hidden]
         HRESULT InitClass();
-        [id(0x60030009)]
+        [id(0x60030009), hidden]
         HRESULT OptionFlags([out, retval] long* );
         [id(0x68030007), propget]
         HRESULT Anchored([out, retval] VARIANT_BOOL* );
@@ -785,7 +527,7 @@ library Regexp_Interface
     };
 
     [
-      uuid(450EFCA9-F1CD-4F30-AF6A-905507173A64),
+      uuid(E0BDB856-1A99-4EE5-89F5-D6AC3C8322F5),
       version(1.0),
       noncreatable
     ]
@@ -795,7 +537,7 @@ library Regexp_Interface
 
     [
       odl,
-      uuid(4E6B8E79-F8D6-42BB-BD34-1DA55F87FFA2),
+      uuid(CEC7A718-6F70-41F6-AA25-B1AB28044F30),
       version(1.0),
       hidden,
       dual,
@@ -803,9 +545,9 @@ library Regexp_Interface
       oleautomation
     ]
     interface _IPcreOptionsReplace : IDispatch {
-        [id(0x60030009)]
+        [id(0x60030009), hidden]
         HRESULT InitClass();
-        [id(0x6003000a)]
+        [id(0x6003000a), hidden]
         HRESULT OptionFlags([out, retval] long* );
         [id(0x68030008), propget]
         HRESULT Anchored([out, retval] VARIANT_BOOL* );
@@ -846,7 +588,7 @@ library Regexp_Interface
     };
 
     [
-      uuid(75F697AF-37F3-44BA-B98F-7FBD85535C20),
+      uuid(8EEC6B32-CD17-4CD0-BCB5-B3F5B5E0B033),
       version(1.0),
       noncreatable
     ]
@@ -854,39 +596,14 @@ library Regexp_Interface
         [default] interface _IPcreOptionsReplace;
     };
 
-    [
-      uuid(125AEC9B-5F35-4E29-A8AF-84DCD85C5DC4),
-      version(1.0),
-      hidden,
-      nonextensible
-    ]
-    dispinterface __cRegExp {
-        properties:
-        methods:
-            [id(0x00000001)]
-            void Matched(
-                            [in, out] BSTR* p_MatchedText, 
-                            [in, out] e_SubstitutionAction* p_SubstitutionAction, 
-                            [in, out] VARIANT_BOOL* p_Cancel);
-    };
+    typedef [uuid(5AD45DD7-DF37-4ACC-AD4E-2BFCBFA3E537), version(1.0)]
+    enum {
+        subaction_None = 0,
+        subaction_Replace = 1,
+        subaction_ReplaceAndCache = 2
+    } e_SubstitutionAction;
 
-    [
-      uuid(52A52FBF-0968-47A9-A3CE-0B38246A3503),
-      version(1.0),
-      hidden,
-      nonextensible
-    ]
-    dispinterface __IPcre {
-        properties:
-        methods:
-            [id(0x00000001)]
-            void Matched(
-                            [in, out] BSTR* p_MatchedText, 
-                            [in, out] e_SubstitutionAction* p_SubstitutionAction, 
-                            [in, out] VARIANT_BOOL* p_Cancel);
-    };
-
-    typedef [uuid(3C1A57D6-6EA5-4C50-94EB-3A4E5A268523), version(1.0)]
+    typedef [uuid(C850105B-A88D-4E75-8DB8-B72EC6170477), version(1.0)]
     enum {
         PCRE_RC_OK = 0,
         PCRE_RC_ERROR_NOMATCH = 0xffffffff,
@@ -955,7 +672,7 @@ library Regexp_Interface
         _PCRE_RC_ERROR_LAST = 0xffffffc2
     } PCRE_ReturnCode;
 
-    typedef [uuid(16782C76-49DA-4AD9-8BC8-619657EB7874), version(1.0)]
+    typedef [uuid(CF95FBA7-8368-4BF2-B811-12DE6C9BDA77), version(1.0)]
     enum {
         PCRE_CO_ALLOW_EMPTY_CLASS = 1,
         PCRE_CO_ALT_BSUX = 2,
@@ -983,7 +700,7 @@ library Regexp_Interface
         PCRE_CO_USE_OFFSET_LIMIT = 0x00800000
     } PCRE_CompileOptions;
 
-    typedef [uuid(F5FEB68A-2630-44D5-AA00-78739450FF0A), version(1.0)]
+    typedef [uuid(01CC2EAE-61CA-4813-B4D7-B0FBAFD60980), version(1.0)]
     enum {
         PCRE2_ERROR_NOMATCH = 0xffffffff,
         PCRE2_SUBSTITUTE_GLOBAL = 256,
@@ -1022,7 +739,7 @@ library Regexp_Interface
         PCRE2_SUBSTITUTE_UNKNOWN_UNSET = 2048
     } PCRE_GlobalConst;
 
-    typedef [uuid(222621A0-9E4F-44F2-92F6-F827218FF557), version(1.0)]
+    typedef [uuid(D642FC5B-DBDF-4810-A998-0268050A4725), version(1.0)]
     enum {
         MAX_PATH = 260,
         FILE_SHARE_READ = 1,
@@ -1044,44 +761,33 @@ library Regexp_Interface
         INVALID_SET_FILE_POINTER = 0xffffffff
     } REGEXP_File_Const;
 
-    typedef [uuid(AA8CDFA1-A5A7-4001-AC7D-E320378857AD), version(1.0)]
+    typedef [uuid(2EB28C29-335E-46E2-894B-0E626FA629FD), version(1.0)]
     struct tagREGEXP_STATE {
-        [helpstring("Global")        
-]
+        [helpstring("Global")]
         VARIANT_BOOL Global;
-        [helpstring("IgnoreCase")        
-]
+        [helpstring("IgnoreCase")]
         VARIANT_BOOL IgnoreCase;
-        [helpstring("Multiline")        
-]
+        [helpstring("Multiline")]
         VARIANT_BOOL Multiline;
-        [helpstring("Pattern")        
-]
+        [helpstring("Pattern")]
         BSTR Pattern;
-        [helpstring("UsePcre")        
-]
+        [helpstring("UsePcre")]
         VARIANT_BOOL UsePcre;
-        [helpstring("Init")        
-]
+        [helpstring("Init")]
         VARIANT_BOOL Init;
-        [helpstring("hLib")        
-]
+        [helpstring("hLib")]
         long hLib;
     } REGEXP_STATE;
 
-    typedef [uuid(AB42C9F7-D64B-44F6-A397-EC17FDE6A99B), version(1.0)]
+    typedef [uuid(08DCE9C4-7507-4ECF-BB6D-60F2FD33A668), version(1.0)]
     struct tagREGEXP_MATCH {
-        [helpstring("FirstIndex")        
-]
+        [helpstring("FirstIndex")]
         long FirstIndex;
-        [helpstring("Length")        
-]
+        [helpstring("Length")]
         long Length;
-        [helpstring("SubMatches")        
-]
+        [helpstring("SubMatches")]
         _IRegExpSubMatches* SubMatches;
-        [helpstring("Value")        
-]
+        [helpstring("Value")]
         BSTR Value;
     } REGEXP_MATCH;
 };

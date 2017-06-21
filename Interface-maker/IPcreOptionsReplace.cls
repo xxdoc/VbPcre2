@@ -14,9 +14,11 @@ Attribute VB_Exposed = True
 Option Explicit
 
 Public Sub InitClass()
+Attribute InitClass.VB_MemberFlags = "40"
 End Sub
 
 Public Function OptionFlags() As Long
+Attribute OptionFlags.VB_MemberFlags = "40"
 End Function
 
 Public Property Get Anchored() As Boolean

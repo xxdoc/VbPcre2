@@ -18,6 +18,8 @@
 *.vbw
 *.zip
 *.tmp
+*.exe
+*.dll
 
 /PCRE-update.txt
 /upload.sh

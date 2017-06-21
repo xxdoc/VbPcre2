@@ -19,12 +19,21 @@ End Property
 Public Property Get MatchedText() As String
 End Property
 
+Public Property Get FirstIndex() As Long
+End Property
+
+Public Property Get LastIndex() As Long
+End Property
+
+Public Property Get Length() As Long
+End Property
+
 Public Property Get SubMatchCount() As Long
 End Property
 
 Public Property Get SubMatchValue(ByVal p_ZeroBasedSubMatchIndex As Long) As String
 End Property
 
-Public Sub Init(ByVal p_SearchedText As String, pa_OvectorArray() As Long, ByVal p_MatchCount As Long)
+Public Sub Init(ByVal p_SearchedText As String, pa_OvectorArray() As Long, ByVal p_MatchCount As Long, ByVal p_MatchOffset As Long)
 End Sub
 
