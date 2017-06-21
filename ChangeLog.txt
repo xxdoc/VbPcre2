@@ -1,5 +1,10 @@
+1.1 Beta
+Added unicode support for RichTextBox
+Added missing RICHTX32.OCX and reg-free manifest
+pcre2-16.dll added to resources with ID 501.
+
 1.0 Beta
-Added GUI (Unicode aware)
+Added GUI
 Added all using examples in frm-file.
 Applyed all PCRE2 wrapper fixes by jpbro.
 Added .PCRE2 property => for accessing directly to PCRE2 wrapper object model.

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<assembly xmlns="urn:schemas-microsoft-com:asm.v1" manifestVersion="1.0">
+
+    <assemblyIdentity
+        version="1.0.0.0"
+        processorArchitecture="*"
+        name="AlexDragokas.RegexpProxyWrapper"
+        type="win32">
+    </assemblyIdentity>
+
+    <description>Wrapper for VBScript.Regexp and PCRE2</description>
+
+	<file name="Richtx32.ocx">
+    	<comClass description="Microsoft Rich Textbox Control 6.0 (SP6)" clsid="{3B7C8860-D78F-101B-B9B5-04021C009402}" threadingModel="Apartment" progid="RICHTEXT.RichtextCtrl" tlbid="{3B7C8863-D78F-101B-B9B5-04021C009402}" />
+    	<comClass description="RichText General Property Page Object" clsid="{78E5A540-1850-11CF-9D53-00AA003C9CB6}" />
+	    <comClass description="RichText Apppearance Property Page Object" clsid="{AFC634B0-4B8B-11CF-8989-00AA00688B10}" />
+	    <comClass description="Microsoft Rich Textbox Control 6.0 (SP6)" clsid="{B617B991-A767-4F05-99BA-AC6FCABB102E}" threadingModel="Apartment" />
+	    <typelib tlbid="{3B7C8863-D78F-101B-B9B5-04021C009402}" version="1.2" helpdir="" />
+	</file>
+
+	<comInterfaceExternalProxyStub name="DRichTextEvents" iid="{3B7C8862-D78F-101B-B9B5-04021C009402}" proxyStubClsid32="{00020420-0000-0000-C000-000000000046}" baseInterface="{00000000-0000-0000-C000-000000000046}" tlbid="{3B7C8863-D78F-101B-B9B5-04021C009402}" />
+	<comInterfaceExternalProxyStub name="IOLEObject" iid="{ED117630-4090-11CF-8981-00AA00688B10}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" baseInterface="{00000000-0000-0000-C000-000000000046}" tlbid="{3B7C8863-D78F-101B-B9B5-04021C009402}" />
+	<comInterfaceExternalProxyStub name="IOLEObjects" iid="{859321D0-3FD1-11CF-8981-00AA00688B10}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" baseInterface="{00000000-0000-0000-C000-000000000046}" tlbid="{3B7C8863-D78F-101B-B9B5-04021C009402}" />
+	<comInterfaceExternalProxyStub name="IRichText" iid="{E9A5593C-CAB0-11D1-8C0B-0000F8754DA1}" proxyStubClsid32="{00020424-0000-0000-C000-000000000046}" baseInterface="{00000000-0000-0000-C000-000000000046}" tlbid="{3B7C8863-D78F-101B-B9B5-04021C009402}" /> 
+
+    <trustInfo xmlns="urn:schemas-microsoft-com:asm.v3">
+        <security>
+            <requestedPrivileges>
+                <requestedExecutionLevel
+                    level="asInvoker"
+                    uiAccess="false">
+                </requestedExecutionLevel>
+            </requestedPrivileges>
+        </security>
+    </trustInfo>
+
+    <compatibility xmlns="urn:schemas-microsoft-com:compatibility.v1">
+        <application>
+            <!-- Windows Vista -->
+            <supportedOS Id="{e2011457-1546-43c5-a5fe-008deee3d3f0}"/>
+            <!-- Windows 7 -->
+            <supportedOS Id="{35138b9a-5d96-4fbd-8e2d-a2440225f93a}"/>
+            <!-- Windows 8 -->
+            <supportedOS Id="{4a2f28e3-53b9-4441-ba9c-d69d4a4a6e38}"/>
+            <!-- Windows 8.1 -->
+            <supportedOS Id="{1f676c76-80e1-4239-95bb-83d0f6d0da78}"/>
+            <!-- Windows 10 -->
+            <supportedOS Id="{8e0f7a12-bfb3-4fe8-b9a5-48fd50a15a9a}"/>
+        </application>
+    </compatibility>
+
+</assembly> 

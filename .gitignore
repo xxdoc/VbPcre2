@@ -9,17 +9,11 @@
 
 # Files:
 
-/Using/pcre2-16.dll
-/Interface-maker/IRegexp.dll
-/Interface-maker/IRegexp.exp
-/Interface-maker/IRegexp.lib
-
 *.csi
 *.vbw
 *.zip
 *.tmp
 *.exe
-*.dll
 
 /PCRE-update.txt
 /upload.sh

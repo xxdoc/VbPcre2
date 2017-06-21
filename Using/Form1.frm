@@ -90,6 +90,7 @@ Begin VB.Form Form1
       _Version        =   393217
       BackColor       =   -2147483633
       BorderStyle     =   0
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       Appearance      =   0
       TextRTF         =   $"Form1.frx":0000
@@ -304,6 +305,7 @@ Begin VB.Form Form1
       _ExtentX        =   12303
       _ExtentY        =   1085
       _Version        =   393217
+      Enabled         =   -1  'True
       TextRTF         =   $"Form1.frx":007D
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Tahoma"
@@ -324,6 +326,7 @@ Begin VB.Form Form1
       _ExtentX        =   12303
       _ExtentY        =   2143
       _Version        =   393217
+      Enabled         =   -1  'True
       TextRTF         =   $"Form1.frx":011C
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Tahoma"
@@ -344,6 +347,7 @@ Begin VB.Form Form1
       _ExtentX        =   6800
       _ExtentY        =   6376
       _Version        =   393217
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       TextRTF         =   $"Form1.frx":01A3
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
@@ -365,6 +369,7 @@ Begin VB.Form Form1
       _ExtentX        =   6800
       _ExtentY        =   6376
       _Version        =   393217
+      Enabled         =   -1  'True
       ReadOnly        =   -1  'True
       TextRTF         =   $"Form1.frx":021E
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
@@ -403,6 +408,7 @@ Begin VB.Form Form1
       _ExtentX        =   12303
       _ExtentY        =   1085
       _Version        =   393217
+      Enabled         =   -1  'True
       TextRTF         =   $"Form1.frx":0299
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Tahoma"
@@ -1160,6 +1166,42 @@ Option Explicit
 '   .Count       as long
 '   .Item        (Index As Long) As String
 
+'---------------------------------------------------
+' For RichTextBox unicode support
+'
+Private Type GETTEXTLENGTHEX
+    flags       As Long
+    codepage    As Long
+End Type
+
+Private Type GETTEXTEX
+    cb              As Long
+    flags           As Long
+    codepage        As Long
+    lpDefaultChar   As Long
+    lpUsedDefChar   As Long
+End Type
+
+Private Type SETTEXTEX
+    flags       As Long
+    codepage    As Long
+End Type
+
+Private Declare Function SendMessageW Lib "user32.dll" (ByVal hWnd As Long, ByVal wMsg As Long, ByVal wParam As Long, lParam As Any) As Long
+
+Private Const CP_UNICODE            As Long = 1200&
+Private Const GT_USECRLF            As Long = 1&
+Private Const GTL_USECRLF           As Long = 1&
+Private Const GTL_PRECISE           As Long = 2&
+Private Const GTL_NUMCHARS          As Long = 8&
+Private Const ST_UNICODE            As Long = 8&
+
+Private Const WM_USER               As Long = &H400&
+Private Const EM_GETTEXTEX          As Long = WM_USER + 94
+Private Const EM_GETTEXTLENGTHEX    As Long = WM_USER + 95
+Private Const EM_SETTEXTEX          As Long = 1121&
+'---------------------------------------------------
+
 
 ' -----------------------------------------
 '
@@ -1367,7 +1409,7 @@ Private Sub ApplySettings()
     mo_Regexp.Global = chkGlobal.Value
     mo_Regexp.IgnoreCase = chkIgnoreCase.Value
     mo_Regexp.MultiLine = chkMultiline.Value
-    mo_Regexp.Pattern = txtPattern.Text
+    mo_Regexp.Pattern = RTBReadUnicode(txtPattern)
 End Sub
 
 Private Sub chkTab_Click(Index As Integer)
@@ -1407,7 +1449,7 @@ Private Sub cmdExecute_Click()
     Dim lo_SubMatch      As Variant
     Dim ii&, jj&
     
-    Set lo_Matches = mo_Regexp.Execute(txtSource.Text)   'run "Execute" method
+    Set lo_Matches = mo_Regexp.Execute(RTBReadUnicode(txtSource))   'run "Execute" method
    
     PrintText "Match Count: " & lo_Matches.Count
     PrintText ""
@@ -1434,7 +1476,7 @@ Private Sub cmdTest_Click()
     If chkSuppressErrors.Value = 1 Then On Error GoTo ErrorHandler  '// TODO: don't know why I can't catch error here in IDE mode (in compiled - all ok)
     ClearFields
     ApplySettings
-    PrintText mo_Regexp.Test(txtSource.Text) 'run "Test" method
+    PrintText mo_Regexp.Test(RTBReadUnicode(txtSource)) 'run "Test" method
     CheckDifference
     Exit Sub
 ErrorHandler:
@@ -1445,7 +1487,7 @@ Private Sub cmdReplace_Click()
     If chkSuppressErrors.Value = 1 Then On Error GoTo ErrorHandler  '// TODO: don't know why I can't catch error here in IDE mode (in compiled - all ok)
     ClearFields
     ApplySettings
-    PrintText mo_Regexp.Replace(txtSource.Text, txtReplace.Text)    'run "Replace" method
+    PrintText mo_Regexp.Replace(RTBReadUnicode(txtSource), RTBReadUnicode(txtReplace))    'run "Replace" method
     CheckDifference
     Exit Sub
 ErrorHandler:
@@ -1454,17 +1496,52 @@ End Sub
 
 Private Sub CheckDifference()
     If OptEngineBoth.Value Then
-        lblStatus.Caption = IIf(txtVB.Text = txtPCRE.Text, "Same", "Different")
+        lblStatus.Caption = IIf(RTBReadUnicode(txtVB) = RTBReadUnicode(txtPCRE), "Same", "Different")
     Else
         lblStatus.Caption = ""
     End If
 End Sub
 
 Private Sub PrintText(p_Text As String)
+    Dim l_CurText As String
     If OptEngineVB.Value Or OptEngineBoth.Value Then
-        txtVB.Text = txtVB.Text & IIf(Len(txtVB.Text) = 0, "", vbCrLf) & p_Text
+        l_CurText = RTBReadUnicode(txtVB)
+        RTBWriteUnicode txtVB, l_CurText & IIf(Len(l_CurText) = 0, "", vbCrLf) & p_Text
     End If
     If OptEnginePCRE.Value Or OptEngineBoth.Value Then
-        txtPCRE.Text = txtPCRE.Text & IIf(Len(txtPCRE.Text) = 0, "", vbCrLf) & p_Text
+        l_CurText = RTBReadUnicode(txtPCRE)
+        RTBWriteUnicode txtPCRE, l_CurText & IIf(Len(l_CurText) = 0, "", vbCrLf) & p_Text
     End If
 End Sub
+
+Public Function RTBReadUnicode(ByVal RTB As RichTextLib.RichTextBox) As String
+    'Reads Text from RichTextBox as Unicode text
+    Dim gtlUnicode As GETTEXTLENGTHEX
+    Dim gtUnicode As GETTEXTEX
+    Dim lngChars As Long
+
+    With gtlUnicode
+        .flags = GTL_USECRLF Or GTL_PRECISE Or GTL_NUMCHARS
+        .codepage = CP_UNICODE
+    End With
+    lngChars = SendMessageW(RTB.hWnd, EM_GETTEXTLENGTHEX, VarPtr(gtlUnicode), ByVal 0)
+
+    With gtUnicode
+        .cb = (lngChars + 1) * 2
+        .flags = GT_USECRLF
+        .codepage = CP_UNICODE
+    End With
+    RTBReadUnicode = String$(lngChars, 0)
+    SendMessageW RTB.hWnd, EM_GETTEXTEX, VarPtr(gtUnicode), ByVal StrPtr(RTBReadUnicode)
+End Function
+
+Public Function RTBWriteUnicode(ByVal RTB As RichTextLib.RichTextBox, p_Text As String) As String
+    'Write Text to RichTextBox as Unicode
+    Dim stUnicode As SETTEXTEX
+
+    With stUnicode
+        .flags = ST_UNICODE
+        .codepage = CP_UNICODE
+    End With
+    SendMessageW RTB.hWnd, EM_SETTEXTEX, VarPtr(stUnicode), ByVal StrPtr(p_Text)
+End Function
