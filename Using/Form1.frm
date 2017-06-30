@@ -327,7 +327,7 @@ Begin VB.Form Form1
       _ExtentY        =   2143
       _Version        =   393217
       Enabled         =   -1  'True
-      TextRTF         =   $"Form1.frx":011C
+      TextRTF         =   $"Form1.frx":0154
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Tahoma"
          Size            =   9
@@ -349,7 +349,7 @@ Begin VB.Form Form1
       _Version        =   393217
       Enabled         =   -1  'True
       ReadOnly        =   -1  'True
-      TextRTF         =   $"Form1.frx":01A3
+      TextRTF         =   $"Form1.frx":0225
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Tahoma"
          Size            =   9
@@ -371,7 +371,7 @@ Begin VB.Form Form1
       _Version        =   393217
       Enabled         =   -1  'True
       ReadOnly        =   -1  'True
-      TextRTF         =   $"Form1.frx":021E
+      TextRTF         =   $"Form1.frx":02A0
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Tahoma"
          Size            =   9
@@ -409,7 +409,7 @@ Begin VB.Form Form1
       _ExtentY        =   1085
       _Version        =   393217
       Enabled         =   -1  'True
-      TextRTF         =   $"Form1.frx":0299
+      TextRTF         =   $"Form1.frx":031B
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Tahoma"
          Size            =   9
@@ -1440,6 +1440,9 @@ End Sub
 
 Private Sub cmdExecute_Click()
     If chkSuppressErrors.Value = 1 Then On Error GoTo ErrorHandler  '// TODO: don't know why I can't catch error here in IDE mode (in compiled - all ok)
+    Dim l_EngineName As String
+    Dim i&
+    
     ClearFields
     ApplySettings
     
@@ -1449,49 +1452,85 @@ Private Sub cmdExecute_Click()
     Dim lo_SubMatch      As Variant
     Dim ii&, jj&
     
-    Set lo_Matches = mo_Regexp.Execute(RTBReadUnicode(txtSource))   'run "Execute" method
+    For i = 1 To 2
+    
+        If i = 1 Then
+            l_EngineName = "VBScript.Regexp"
+            mo_Regexp.UsePcre = False
+        Else
+            l_EngineName = "PCRE2"
+            mo_Regexp.UsePcre = True
+        End If
+        
+        ii = 0
+        jj = 0
+        
+        Set lo_Matches = mo_Regexp.Execute(RTBReadUnicode(txtSource))   'run "Execute" method
    
-    PrintText "Match Count: " & lo_Matches.Count
-    PrintText ""
+        PrintText l_EngineName, "Match Count: " & lo_Matches.Count
+        PrintText l_EngineName, ""
 
-    For Each lo_Match In lo_Matches
+        For Each lo_Match In lo_Matches
     
-      Set lo_Submatches = lo_Match.SubMatches
+            Set lo_Submatches = lo_Match.SubMatches
     
-      ii = ii + 1
-      PrintText "#" & ii & ": " & lo_Match.Value
+            ii = ii + 1
+            PrintText l_EngineName, "#" & ii & ": " & lo_Match.Value
 
-      For Each lo_SubMatch In lo_Submatches
-        jj = jj + 1
-        PrintText Space(30) & "Sub.#" & jj & ": " & lo_SubMatch
-      Next
+            For Each lo_SubMatch In lo_Submatches
+                jj = jj + 1
+                PrintText l_EngineName, Space(30) & "Sub.#" & jj & ": " & lo_SubMatch
+            Next
+        Next
+    
     Next
+    
     CheckDifference
     Exit Sub
 ErrorHandler:
-    txtError.Text = Err.Description
+    txtError.Text = l_EngineName & ": " & Err.Description
 End Sub
 
 Private Sub cmdTest_Click()
     If chkSuppressErrors.Value = 1 Then On Error GoTo ErrorHandler  '// TODO: don't know why I can't catch error here in IDE mode (in compiled - all ok)
+    Dim l_EngineName As String
+    
     ClearFields
     ApplySettings
-    PrintText mo_Regexp.Test(RTBReadUnicode(txtSource)) 'run "Test" method
+    
+    l_EngineName = "VBScript.Regexp"
+    mo_Regexp.UsePcre = False
+    PrintText l_EngineName, mo_Regexp.Test(RTBReadUnicode(txtSource)) 'run "Test" method
+    
+    l_EngineName = "PCRE2"
+    mo_Regexp.UsePcre = True
+    PrintText l_EngineName, mo_Regexp.Test(RTBReadUnicode(txtSource)) 'run "Test" method
+    
     CheckDifference
     Exit Sub
 ErrorHandler:
-    txtError.Text = Err.Description
+    txtError.Text = l_EngineName & ": " & Err.Description
 End Sub
 
 Private Sub cmdReplace_Click()
     If chkSuppressErrors.Value = 1 Then On Error GoTo ErrorHandler  '// TODO: don't know why I can't catch error here in IDE mode (in compiled - all ok)
+    Dim l_EngineName As String
+    
     ClearFields
     ApplySettings
-    PrintText mo_Regexp.Replace(RTBReadUnicode(txtSource), RTBReadUnicode(txtReplace))    'run "Replace" method
+    
+    l_EngineName = "VBScript.Regexp"
+    mo_Regexp.UsePcre = False
+    PrintText l_EngineName, mo_Regexp.Replace(RTBReadUnicode(txtSource), RTBReadUnicode(txtReplace))  'run "Replace" method
+    
+    l_EngineName = "PCRE2"
+    mo_Regexp.UsePcre = True
+    PrintText l_EngineName, mo_Regexp.Replace(RTBReadUnicode(txtSource), RTBReadUnicode(txtReplace))  'run "Replace" method
+    
     CheckDifference
     Exit Sub
 ErrorHandler:
-    txtError.Text = Err.Description
+    txtError.Text = l_EngineName & ": " & Err.Description
 End Sub
 
 Private Sub CheckDifference()
@@ -1502,16 +1541,15 @@ Private Sub CheckDifference()
     End If
 End Sub
 
-Private Sub PrintText(p_Text As String)
+Private Sub PrintText(p_EngineName As String, p_Text As String)
     Dim l_CurText As String
-    If OptEngineVB.Value Or OptEngineBoth.Value Then
-        l_CurText = RTBReadUnicode(txtVB)
-        RTBWriteUnicode txtVB, l_CurText & IIf(Len(l_CurText) = 0, "", vbCrLf) & p_Text
-    End If
-    If OptEnginePCRE.Value Or OptEngineBoth.Value Then
-        l_CurText = RTBReadUnicode(txtPCRE)
-        RTBWriteUnicode txtPCRE, l_CurText & IIf(Len(l_CurText) = 0, "", vbCrLf) & p_Text
-    End If
+    Dim lo_RTB As RichTextBox
+    
+    If p_EngineName = "VBScript.Regexp" Then Set lo_RTB = txtVB
+    If p_EngineName = "PCRE2" Then Set lo_RTB = txtPCRE
+    
+    l_CurText = RTBReadUnicode(lo_RTB)
+    RTBWriteUnicode lo_RTB, l_CurText & IIf(Len(l_CurText) = 0, "", vbCrLf) & p_Text
 End Sub
 
 Public Function RTBReadUnicode(ByVal RTB As RichTextLib.RichTextBox) As String
