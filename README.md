@@ -1,7 +1,6 @@
 # VBScript.Regexp - PCRE2 portable VB6 proxy wrapper
 
-## WARNING: This is still Alpha-version:
-* Need more testing.
+![face](https://github.com/dragokas/VbPcre2/blob/master/Using/face.png?raw=true "face of using example")
 
 This wrapper:
  - is portable (you can make a single EXE)
